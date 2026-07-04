@@ -1,0 +1,59 @@
+/* ============================================
+   StatCard Component Styles — Matched to Design
+   ============================================ */
+
+.card {
+  background: var(--color-neutral-0);
+  border-radius: var(--radius-xl);
+  padding: var(--space-6);
+  box-shadow: var(--shadow-card);
+  border: 1px solid var(--color-neutral-100);
+  transition: all var(--transition-base);
+  position: relative;
+  overflow: hidden;
+  animation-fill-mode: both;
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+/* Body */
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  margin-bottom: var(--space-3);
+}
+
+.value {
+  font-family: var(--font-heading);
+  font-size: var(--text-5xl);
+  font-weight: 800;
+  color: var(--color-neutral-900);
+  line-height: 1;
+  animation: countUp 0.6s ease-out;
+}
+
+.label {
+  font-size: var(--text-base);
+  color: var(--color-neutral-400);
+  font-weight: 500;
+}
+
+/* Link */
+.link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--color-accent-600);
+  transition: all var(--transition-fast);
+}
+
+.link:hover {
+  gap: var(--space-2);
+  color: var(--color-accent-700);
+}

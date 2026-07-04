@@ -1,0 +1,285 @@
+/* ============================================
+   Topbar Component Styles
+   ============================================ */
+
+.topbar {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: var(--sidebar-width);
+  height: var(--topbar-height);
+  background: var(--color-neutral-0);
+  border-bottom: 1px solid var(--color-neutral-200);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 var(--space-6);
+  z-index: var(--z-topbar);
+  transition: left var(--transition-base);
+  box-shadow: var(--shadow-xs);
+}
+
+/* Search */
+.searchContainer {
+  position: relative;
+  flex: 1;
+  max-width: 480px;
+}
+
+.searchIcon {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--color-neutral-400);
+  pointer-events: none;
+}
+
+.searchInput {
+  width: 100%;
+  padding: 10px 14px 10px 42px;
+  border: 1px solid var(--color-neutral-200);
+  border-radius: var(--radius-lg);
+  background: var(--color-neutral-50);
+  color: var(--color-neutral-800);
+  font-size: var(--text-sm);
+  transition: all var(--transition-fast);
+}
+
+.searchInput:focus {
+  outline: none;
+  border-color: var(--color-primary-400);
+  background: var(--color-neutral-0);
+  box-shadow: 0 0 0 3px rgba(204, 0, 0, 0.1);
+}
+
+.searchInput::placeholder {
+  color: var(--color-neutral-400);
+}
+
+/* Right Section */
+.rightSection {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+/* Role Switcher */
+.roleSwitcher {
+  margin-right: var(--space-2);
+}
+
+.roleSelect {
+  padding: 6px 12px;
+  border: 1px solid var(--color-neutral-200);
+  border-radius: var(--radius-md);
+  font-size: var(--text-xs);
+  color: var(--color-neutral-600);
+  background: var(--color-neutral-50);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.roleSelect:hover {
+  border-color: var(--color-primary-300);
+}
+
+.roleSelect:focus {
+  outline: none;
+  border-color: var(--color-primary-500);
+}
+
+/* Icon Button */
+.iconBtn {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-lg);
+  color: var(--color-neutral-600);
+  transition: all var(--transition-fast);
+}
+
+.iconBtn:hover {
+  background: var(--color-neutral-100);
+  color: var(--color-neutral-800);
+}
+
+.badge {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 18px;
+  height: 18px;
+  border-radius: var(--radius-full);
+  background: var(--color-primary-600);
+  color: var(--color-neutral-0);
+  font-size: 10px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--color-neutral-0);
+}
+
+/* User Button */
+.userMenuContainer {
+  position: relative;
+}
+
+.userBtn {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-lg);
+  transition: all var(--transition-fast);
+}
+
+.userBtn:hover {
+  background: var(--color-neutral-50);
+}
+
+.userAvatar {
+  width: 34px;
+  height: 34px;
+  border-radius: var(--radius-full);
+  background: linear-gradient(135deg, var(--color-primary-600), var(--color-primary-800));
+  color: var(--color-neutral-0);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: var(--text-sm);
+}
+
+.userInfo {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.userName {
+  font-weight: 600;
+  font-size: var(--text-sm);
+  color: var(--color-neutral-800);
+  line-height: 1.2;
+}
+
+.userRole {
+  font-size: var(--text-xs);
+  color: var(--color-neutral-500);
+  line-height: 1.2;
+}
+
+.chevron {
+  color: var(--color-neutral-400);
+  transition: transform var(--transition-fast);
+}
+
+.chevron.rotated {
+  transform: rotate(180deg);
+}
+
+/* Dropdown */
+.dropdown {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  min-width: 280px;
+  background: var(--color-neutral-0);
+  border: 1px solid var(--color-neutral-200);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-lg);
+  animation: scaleIn var(--transition-fast) ease-out;
+  overflow: hidden;
+  z-index: var(--z-dropdown);
+}
+
+.notifContainer {
+  position: relative;
+}
+
+.dropdownHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-4);
+  border-bottom: 1px solid var(--color-neutral-100);
+}
+
+.dropdownHeader h4 {
+  font-size: var(--text-sm);
+  font-weight: 700;
+  color: var(--color-neutral-800);
+}
+
+.markAllRead {
+  font-size: var(--text-xs);
+  color: var(--color-primary-600);
+  font-weight: 500;
+}
+
+.markAllRead:hover {
+  text-decoration: underline;
+}
+
+.notifList {
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.notifItem {
+  padding: var(--space-3) var(--space-4);
+  border-bottom: 1px solid var(--color-neutral-50);
+  cursor: pointer;
+  transition: background var(--transition-fast);
+}
+
+.notifItem:hover {
+  background: var(--color-neutral-50);
+}
+
+.notifItem.unread {
+  background: var(--color-primary-50);
+}
+
+.notifItem.unread:hover {
+  background: var(--color-primary-100);
+}
+
+.notifText {
+  font-size: var(--text-sm);
+  color: var(--color-neutral-700);
+  margin-bottom: var(--space-1);
+}
+
+.notifTime {
+  font-size: var(--text-xs);
+  color: var(--color-neutral-400);
+}
+
+.dropdownItem {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  width: 100%;
+  font-size: var(--text-sm);
+  color: var(--color-neutral-700);
+  transition: all var(--transition-fast);
+  text-align: left;
+}
+
+.dropdownItem:hover {
+  background: var(--color-neutral-50);
+  color: var(--color-neutral-900);
+}
+
+.dropdownDivider {
+  height: 1px;
+  background: var(--color-neutral-100);
+  margin: var(--space-1) 0;
+}

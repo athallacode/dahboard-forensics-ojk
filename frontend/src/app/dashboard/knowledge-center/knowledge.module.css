@@ -1,0 +1,51 @@
+/* ============================================
+   Knowledge Center Page Styles
+   ============================================ */
+
+.page { display: flex; flex-direction: column; gap: var(--space-6); }
+.header { animation: fadeInUp 0.4s ease-out; }
+.title { font-family: var(--font-heading); font-size: var(--text-2xl); font-weight: 800; color: var(--color-neutral-900); }
+.subtitle { font-size: var(--text-sm); color: var(--color-neutral-500); margin-top: var(--space-1); }
+
+/* Filters */
+.filters { display: flex; flex-direction: column; gap: var(--space-4); animation: fadeInUp 0.4s ease-out; animation-delay: 50ms; animation-fill-mode: both; }
+.searchBox { position: relative; max-width: 500px; }
+.searchIcon { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: var(--color-neutral-400); }
+.searchInput { width: 100%; padding: 10px 14px 10px 42px; border: 1px solid var(--color-neutral-200); border-radius: var(--radius-lg); font-size: var(--text-sm); background: var(--color-neutral-0); }
+.searchInput:focus { outline: none; border-color: var(--color-primary-400); box-shadow: 0 0 0 3px rgba(204, 0, 0, 0.1); }
+
+.categoryFilters { display: flex; gap: var(--space-2); flex-wrap: wrap; }
+.catChip { padding: var(--space-2) var(--space-4); border: 1px solid var(--color-neutral-200); border-radius: var(--radius-full); font-size: var(--text-sm); font-weight: 500; color: var(--color-neutral-600); background: var(--color-neutral-0); transition: all var(--transition-fast); }
+.catChip:hover { border-color: var(--color-neutral-400); }
+.catChip.activeCat { color: var(--color-neutral-0); }
+
+/* Document Grid */
+.docGrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: var(--space-4); }
+
+.docCard {
+  background: var(--color-neutral-0); border: 1px solid var(--color-neutral-100);
+  border-radius: var(--radius-xl); padding: var(--space-5); box-shadow: var(--shadow-xs);
+  transition: all var(--transition-fast); display: flex; flex-direction: column; gap: var(--space-3);
+}
+.docCard:hover { border-color: var(--color-neutral-200); box-shadow: var(--shadow-md); transform: translateY(-2px); }
+
+.docTop { display: flex; align-items: center; justify-content: space-between; }
+.docIcon { width: 48px; height: 48px; border-radius: var(--radius-lg); display: flex; align-items: center; justify-content: center; }
+.catBadge { padding: 2px 10px; border-radius: var(--radius-full); font-size: 11px; font-weight: 600; }
+
+.docTitle { font-size: var(--text-base); font-weight: 600; color: var(--color-neutral-800); line-height: 1.4; }
+.docDesc { font-size: var(--text-sm); color: var(--color-neutral-500); line-height: 1.5; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; flex: 1; }
+.docMeta { display: flex; justify-content: space-between; font-size: var(--text-xs); color: var(--color-neutral-400); padding-top: var(--space-2); border-top: 1px solid var(--color-neutral-100); }
+
+.docFooter { display: flex; align-items: center; justify-content: space-between; }
+.downloads { display: flex; align-items: center; gap: var(--space-1); font-size: var(--text-xs); color: var(--color-neutral-400); }
+.docActions { display: flex; gap: var(--space-2); }
+.viewDocBtn { display: flex; align-items: center; gap: var(--space-1); padding: var(--space-1) var(--space-3); border: 1px solid var(--color-neutral-200); border-radius: var(--radius-md); font-size: var(--text-xs); font-weight: 500; color: var(--color-neutral-600); transition: all var(--transition-fast); }
+.viewDocBtn:hover { background: var(--color-neutral-50); border-color: var(--color-neutral-300); }
+.downloadDocBtn { width: 28px; height: 28px; border-radius: var(--radius-md); border: 1px solid var(--color-neutral-200); display: flex; align-items: center; justify-content: center; color: var(--color-neutral-400); transition: all var(--transition-fast); }
+.downloadDocBtn:hover { background: var(--color-accent-50); border-color: var(--color-accent-300); color: var(--color-accent-600); }
+
+/* Empty State */
+.emptyState { text-align: center; padding: var(--space-12); color: var(--color-neutral-400); }
+.emptyState h3 { font-size: var(--text-lg); color: var(--color-neutral-600); margin-top: var(--space-4); }
+.emptyState p { font-size: var(--text-sm); margin-top: var(--space-2); }

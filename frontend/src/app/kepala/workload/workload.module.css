@@ -1,0 +1,266 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+  padding: 0;
+  max-width: 1200px;
+  animation: fadeIn 0.4s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.header {
+  margin-bottom: var(--space-2);
+}
+
+.title {
+  font-family: var(--font-sans);
+  font-size: 2.2rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, #111827 0%, #374151 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: var(--space-2);
+}
+
+.subtitle {
+  font-size: 1.1rem;
+  color: var(--color-neutral-500);
+}
+
+.contentGrid {
+  display: grid;
+  grid-template-columns: 1fr 1.3fr;
+  gap: var(--space-6);
+}
+
+@media (max-width: 1024px) {
+  .contentGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Modern Card */
+.card {
+  background: white;
+  border-radius: 24px;
+  padding: 32px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.04);
+  border: 1px solid rgba(0, 0, 0, 0.03);
+  display: flex;
+  flex-direction: column;
+}
+
+.cardHeader {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: var(--space-8);
+}
+
+.iconBox {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #FEF2F2 0%, #FEE2E2 100%);
+  color: #EF4444;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.iconBoxBlue {
+  background: linear-gradient(135deg, #EEF2FF 0%, #E0E7FF 100%);
+  color: #4F46E5;
+}
+
+.cardTitle {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--color-neutral-900);
+}
+
+/* Workload Distribution */
+.distributionContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.distRow {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.distInfo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.personelCol {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.avatarSm {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background-color: #F8FAFC;
+  border: 1px solid #E2E8F0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #475569;
+}
+
+.distName {
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--color-neutral-800);
+}
+
+.capacityLabel {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.capacityPercent {
+  font-weight: 800;
+  font-size: 1.1rem;
+  color: var(--color-neutral-900);
+}
+
+.capacityBadge {
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.progressBarBg {
+  width: 100%;
+  height: 12px;
+  background-color: #F1F5F9;
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow: inset 0 1px 3px rgba(0,0,0,0.05);
+}
+
+.progressBarFill {
+  height: 100%;
+  border-radius: 6px;
+  transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Detailed Assignment Table */
+.tableCard {
+  padding: 32px 0;
+}
+
+.tableCard .cardHeader {
+  padding: 0 32px;
+}
+
+.tableWrapper {
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+.table th {
+  padding: 16px 32px;
+  text-align: left;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--color-neutral-400);
+  font-weight: 700;
+  border-bottom: 1px solid var(--color-neutral-100);
+}
+
+.table td {
+  padding: 20px 32px;
+  text-align: left;
+  font-size: 0.95rem;
+  border-bottom: 1px solid var(--color-neutral-50);
+  vertical-align: middle;
+}
+
+.tableRow {
+  transition: background-color 0.2s ease;
+}
+
+.tableRow:hover {
+  background-color: #F8FAFC;
+}
+
+.tableRow:last-child td {
+  border-bottom: none;
+}
+
+.userIcon {
+  color: #94A3B8;
+}
+
+.personName {
+  font-weight: 600;
+  color: #1E293B;
+}
+
+.roleText {
+  color: var(--color-neutral-500);
+  font-size: 0.9rem;
+}
+
+.numBadge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  background-color: #F1F5F9;
+  color: #475569;
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
+.numBadgeTotal {
+  background-color: #EEF2FF;
+  color: #4F46E5;
+}
+
+.actionBtn {
+  background: none;
+  border: none;
+  color: #4F46E5;
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  transition: gap 0.2s, opacity 0.2s;
+}
+
+.actionBtn:hover {
+  gap: 8px;
+  opacity: 0.8;
+}

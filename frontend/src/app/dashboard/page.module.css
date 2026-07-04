@@ -1,0 +1,138 @@
+/* ============================================
+   Dashboard Home Page Styles — Matched to Design
+   ============================================ */
+
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+/* WiFi OJK Security Banner */
+.securityBanner {
+  background-color: #ECFDF5;
+  border: 1px solid #10B981;
+  color: #047857;
+  padding: 10px 16px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  animation: fadeInDown 0.4s ease-out;
+}
+
+.securityIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #059669;
+}
+
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Greeting Banner */
+.banner {
+  background: var(--color-primary-50);
+  border-radius: var(--radius-xl);
+  padding: 0;
+  display: flex;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  animation: fadeInUp 0.5s ease-out;
+  min-height: 120px;
+}
+
+.bannerContent {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  padding: var(--space-6) var(--space-8);
+  display: flex;
+  flex-direction: column;
+}
+
+.greeting {
+  font-family: var(--font-sans);
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: var(--space-4);
+  letter-spacing: -0.02em;
+}
+
+.greetingDark {
+  color: var(--color-neutral-800);
+}
+
+.greetingMaroon {
+  color: #B51D1D;
+}
+
+.wave {
+  margin-left: 8px;
+  display: inline-block;
+  animation: wave 2s infinite;
+  transform-origin: 70% 70%;
+}
+
+@keyframes wave {
+  0% { transform: rotate(0.0deg) }
+  10% { transform: rotate(14.0deg) }
+  20% { transform: rotate(-8.0deg) }
+  30% { transform: rotate(14.0deg) }
+  40% { transform: rotate(-4.0deg) }
+  50% { transform: rotate(10.0deg) }
+  60% { transform: rotate(0.0deg) }
+  100% { transform: rotate(0.0deg) }
+}
+
+.greetingSubtext {
+  font-size: 0.95rem;
+  color: var(--color-neutral-600);
+  background: rgba(239, 45, 45, 0.1);
+  padding: 10px 16px;
+  border-radius: 4px;
+  align-self: flex-start;
+  font-weight: 500;
+}
+
+.flagImg {
+  position: absolute;
+  right: -20px;
+  bottom: 0;
+  height: 120%;
+  object-fit: contain;
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* Stats Grid */
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-5);
+}
+
+@media (max-width: 1200px) {
+  .statsGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .statsGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Request Table — Full Width */
+.tableSection {
+  animation: fadeInUp 0.5s ease-out;
+  animation-delay: 200ms;
+  animation-fill-mode: both;
+}
