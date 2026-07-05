@@ -46,9 +46,9 @@ export default function Topbar() {
 
   const roleName = (role: string) => {
     switch (role) {
-      case 'staf_pemeriksa': return 'Staf Pemeriksa';
-      case 'supervisor': return 'Supervisor';
-      case 'admin': return 'Administrator';
+      case 'staf_pemeriksa': return 'Pemohon';
+      case 'supervisor': return 'Kepala Lab';
+      case 'analis_lab': return 'Pemeriksa';
       default: return role;
     }
   };
@@ -87,9 +87,9 @@ export default function Topbar() {
             id="role-switcher"
             title="Switch role (demo)"
           >
-            <option value="staf_pemeriksa">Staf Pemeriksa</option>
-            <option value="supervisor">Supervisor</option>
-            <option value="admin">Admin</option>
+            <option value="staf_pemeriksa">Pemohon (Staf Pemeriksa)</option>
+            <option value="supervisor">Kepala Lab (Supervisor)</option>
+            <option value="analis_lab">Pemeriksa (Analis Lab)</option>
           </select>
         </div>
 

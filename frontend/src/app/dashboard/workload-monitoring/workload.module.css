@@ -1,0 +1,302 @@
+/* ============================================
+   Workload Monitoring Page Styles
+   ============================================ */
+
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  max-width: 1200px;
+  margin: 0 auto;
+  animation: fadeIn 0.4s ease-out;
+}
+
+.header {
+  margin-bottom: var(--space-2);
+}
+
+.title {
+  font-family: var(--font-heading);
+  font-size: var(--text-2xl);
+  font-weight: 800;
+  color: var(--color-neutral-900);
+}
+
+.subtitle {
+  font-size: var(--text-sm);
+  color: var(--color-neutral-500);
+  margin-top: var(--space-1);
+}
+
+/* Card */
+.card {
+  background: var(--color-neutral-0);
+  border: 1px solid var(--color-neutral-200);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+}
+
+.cardHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-5) var(--space-6);
+  border-bottom: 1px solid var(--color-neutral-200);
+  background: var(--color-neutral-50);
+}
+
+.cardTitle {
+  font-size: var(--text-lg);
+  font-weight: 700;
+  color: var(--color-neutral-800);
+}
+
+.cardActions {
+  display: flex;
+  gap: var(--space-3);
+}
+
+.filterBtn, .viewAllBtn {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 8px 16px;
+  border-radius: var(--radius-md);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.filterBtn {
+  background: var(--color-neutral-0);
+  border: 1px solid var(--color-neutral-200);
+  color: var(--color-neutral-600);
+}
+
+.filterBtn:hover {
+  background: var(--color-neutral-100);
+  border-color: var(--color-neutral-300);
+}
+
+.viewAllBtn {
+  background: var(--color-primary-50);
+  border: 1px solid var(--color-primary-200);
+  color: var(--color-primary-700);
+}
+
+.viewAllBtn:hover {
+  background: var(--color-primary-100);
+}
+
+/* Table */
+.tableWrapper {
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table th, .table td {
+  padding: var(--space-4) var(--space-6);
+  text-align: left;
+  border-bottom: 1px solid var(--color-neutral-100);
+}
+
+.table th {
+  font-size: var(--text-xs);
+  font-weight: 600;
+  color: var(--color-neutral-500);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  background: var(--color-neutral-0);
+}
+
+.table tbody tr:hover {
+  background: var(--color-neutral-50);
+}
+
+.personInfo {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-full);
+  background: var(--color-primary-100);
+  color: var(--color-primary-700);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: var(--text-sm);
+}
+
+.personName {
+  font-weight: 600;
+  color: var(--color-neutral-800);
+}
+
+.roleText {
+  font-size: var(--text-sm);
+  color: var(--color-neutral-600);
+}
+
+.statNumber {
+  display: inline-block;
+  padding: 4px 12px;
+  background: var(--color-neutral-100);
+  border-radius: var(--radius-full);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--color-neutral-700);
+}
+
+.btnDetails {
+  padding: 6px 12px;
+  background: var(--color-neutral-0);
+  border: 1px solid var(--color-neutral-200);
+  border-radius: var(--radius-md);
+  font-size: var(--text-xs);
+  font-weight: 600;
+  color: var(--color-neutral-600);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.btnDetails:hover {
+  background: var(--color-neutral-100);
+  color: var(--color-neutral-800);
+}
+
+/* Distribution */
+.distributionContainer {
+  padding: var(--space-6);
+}
+
+.distributionHeader {
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: var(--space-3);
+  margin-bottom: var(--space-4);
+  border-bottom: 1px solid var(--color-neutral-200);
+  font-size: var(--text-xs);
+  font-weight: 600;
+  color: var(--color-neutral-500);
+  text-transform: uppercase;
+}
+
+.distributionList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.distributionRow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-6);
+  animation: fadeInLeft 0.5s ease-out;
+  animation-fill-mode: both;
+}
+
+.progressBarContainer {
+  flex: 1;
+}
+
+.progressLabel {
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--color-neutral-800);
+  margin-bottom: var(--space-2);
+}
+
+.progressTrack {
+  height: 8px;
+  background: var(--color-neutral-100);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+}
+
+.progressBar {
+  height: 100%;
+  border-radius: var(--radius-full);
+  transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.barBlue { background: var(--color-info-500); }
+.barGreen { background: var(--color-success-500); }
+.barYellow { background: var(--color-warning-500); }
+
+.percentBox {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  width: 150px;
+  justify-content: flex-end;
+}
+
+.percentText {
+  font-size: var(--text-sm);
+  font-weight: 700;
+  color: var(--color-neutral-700);
+}
+
+/* SIEM Feed */
+.siemBox {
+  background: #0F172A;
+  border-radius: var(--radius-xl);
+  padding: var(--space-5) var(--space-6);
+  color: #94A3B8;
+  font-family: monospace;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+}
+
+.siemHeader {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  color: #38BDF8;
+  margin-bottom: var(--space-3);
+  padding-bottom: var(--space-3);
+  border-bottom: 1px solid #1E293B;
+}
+
+.siemHeader h3 {
+  font-size: var(--text-sm);
+  font-weight: 600;
+  margin: 0;
+  font-family: var(--font-sans);
+}
+
+.pulseIndicator {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #10B981;
+  margin-left: auto;
+  box-shadow: 0 0 8px #10B981;
+  animation: pulse 2s infinite;
+}
+
+.siemLogs {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.siemLog {
+  font-size: 13px;
+  margin: 0;
+}
+
+.siemTimestamp {
+  color: #64748B;
+  margin-right: 8px;
+}

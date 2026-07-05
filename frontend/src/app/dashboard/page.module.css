@@ -136,3 +136,48 @@
   animation-delay: 200ms;
   animation-fill-mode: both;
 }
+
+/* Quick Actions (Supervisor) */
+.quickActions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-4);
+  animation: fadeInUp 0.5s ease-out;
+  animation-delay: 300ms;
+  animation-fill-mode: both;
+}
+
+.quickActionBtn {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-4) var(--space-5);
+  background: var(--color-neutral-0);
+  border: 1px solid var(--color-neutral-200);
+  border-radius: var(--radius-xl);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--color-neutral-700);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  box-shadow: var(--shadow-xs);
+}
+
+.quickActionBtn:hover {
+  border-color: var(--color-primary-300);
+  color: var(--color-primary-700);
+  background: var(--color-primary-50);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-sm);
+}
+
+.quickActionBtn span {
+  flex: 1;
+  text-align: left;
+}
+
+@media (max-width: 600px) {
+  .quickActions {
+    grid-template-columns: 1fr;
+  }
+}

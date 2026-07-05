@@ -6,6 +6,11 @@ import {
   Loader2,
   CheckCircle2,
   Clock,
+  AlertTriangle,
+  BarChart3,
+  Timer,
+  Microscope,
+  ArrowRight,
 } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
 import StatCard from '@/components/StatCard';
@@ -13,14 +18,222 @@ import RequestTable from '@/components/RequestTable';
 import { mockDashboardStats, mockRequests } from '@/data/mock';
 import styles from './page.module.css';
 
-export default function DashboardPage() {
+/* ============================================
+   ROLE-BASED DASHBOARD VIEWS
+   ============================================ */
+
+// ---- Staf Pemeriksa (Pemohon) Dashboard ----
+function StafPemeriksaDashboard() {
   const { user } = useAuth();
   const router = useRouter();
 
-  // Filter requests based on role
-  const visibleRequests = user?.role === 'staf_pemeriksa'
-    ? mockRequests.filter((r) => r.createdBy === user.id)
-    : mockRequests;
+  const myRequests = mockRequests.filter((r) => r.createdBy === user?.id);
+  const myInProgress = myRequests.filter((r) => r.status === 'on_progress').length;
+  const myCompleted = myRequests.filter((r) => r.status === 'completed').length;
+  const myPending = myRequests.filter((r) => r.status === 'pending').length;
+
+  return (
+    <>
+      {/* Stats Grid */}
+      <div className={styles.statsGrid}>
+        <StatCard
+          value={myRequests.length}
+          label="My Total Requests"
+          icon={<ClipboardList size={22} />}
+          color="blue"
+          delay={100}
+        />
+        <StatCard
+          value={myInProgress}
+          label="In Progress"
+          icon={<Loader2 size={22} />}
+          color="orange"
+          delay={200}
+        />
+        <StatCard
+          value={myCompleted}
+          label="Completed"
+          icon={<CheckCircle2 size={22} />}
+          color="green"
+          delay={300}
+        />
+        <StatCard
+          value={myPending}
+          label="Action Required"
+          icon={<AlertTriangle size={22} />}
+          color="red"
+          delay={400}
+        />
+      </div>
+
+      {/* Request Table */}
+      <div className={styles.tableSection}>
+        <RequestTable
+          requests={myRequests}
+          title="Permintaan Saya (My Active Requests)"
+          onViewAll={() => router.push('/dashboard/my-request')}
+          onDetails={(req) => alert(`Detail Request #${req.requestNo}\n\n${req.useCase}\n\nStatus: ${req.status}\nDeskripsi: ${req.description}`)}
+          maxRows={5}
+        />
+      </div>
+    </>
+  );
+}
+
+// ---- Supervisor (Kepala Lab) Dashboard ----
+function SupervisorDashboard() {
+  const router = useRouter();
+
+  const totalTasks = mockDashboardStats.totalTasks;
+  const inProgress = mockRequests.filter((r) => r.status === 'on_progress').length;
+  const completed = mockRequests.filter((r) => r.status === 'completed').length;
+
+  return (
+    <>
+      {/* Stats Grid */}
+      <div className={styles.statsGrid}>
+        <StatCard
+          value={totalTasks}
+          label="Total Lab Tasks"
+          icon={<ClipboardList size={22} />}
+          color="blue"
+          delay={100}
+        />
+        <StatCard
+          value={inProgress}
+          label="In Progress"
+          icon={<Loader2 size={22} />}
+          color="orange"
+          delay={200}
+        />
+        <StatCard
+          value={completed}
+          label="Completed"
+          icon={<CheckCircle2 size={22} />}
+          color="green"
+          delay={300}
+        />
+        <StatCard
+          value={10}
+          label="Avg. SLA (Days)"
+          icon={<Timer size={22} />}
+          color="red"
+          delay={400}
+        />
+      </div>
+
+      {/* Overview Table — All Requests */}
+      <div className={styles.tableSection}>
+        <RequestTable
+          requests={mockRequests}
+          title="Overview Lab — Semua Permintaan"
+          onViewAll={() => router.push('/dashboard/workload-monitoring')}
+          onDetails={(req) => alert(`Detail Request #${req.requestNo}\n\n${req.useCase}\n\nAssigned: ${req.assignedTo}\nStatus: ${req.status}`)}
+          maxRows={5}
+        />
+      </div>
+
+      {/* Quick Actions */}
+      <div className={styles.quickActions}>
+        <button
+          className={styles.quickActionBtn}
+          onClick={() => router.push('/dashboard/workload-monitoring')}
+        >
+          <BarChart3 size={18} />
+          <span>Workload Monitoring</span>
+          <ArrowRight size={16} />
+        </button>
+        <button
+          className={styles.quickActionBtn}
+          onClick={() => router.push('/dashboard/case-assignment')}
+        >
+          <ClipboardList size={18} />
+          <span>Case Assignment</span>
+          <ArrowRight size={16} />
+        </button>
+      </div>
+    </>
+  );
+}
+
+// ---- Analis Lab (Pemeriksa) Dashboard ----
+function AnalisLabDashboard() {
+  const { user } = useAuth();
+  const router = useRouter();
+
+  // Cases assigned to this analyst
+  const assignedCases = mockRequests.filter((r) => r.assignedTo === user?.name);
+  const pendingReview = assignedCases.filter((r) => r.status === 'pending').length;
+  const completedByMe = assignedCases.filter((r) => r.status === 'completed').length;
+  const highPriority = assignedCases.filter((r) => r.priority === 'high').length;
+
+  return (
+    <>
+      {/* Stats Grid */}
+      <div className={styles.statsGrid}>
+        <StatCard
+          value={assignedCases.length}
+          label="My Assigned Cases"
+          icon={<Microscope size={22} />}
+          color="blue"
+          delay={100}
+        />
+        <StatCard
+          value={pendingReview}
+          label="Pending Review"
+          icon={<Clock size={22} />}
+          color="orange"
+          delay={200}
+        />
+        <StatCard
+          value={completedByMe}
+          label="Completed by Me"
+          icon={<CheckCircle2 size={22} />}
+          color="green"
+          delay={300}
+        />
+        <StatCard
+          value={highPriority}
+          label="High Priority"
+          icon={<AlertTriangle size={22} />}
+          color="red"
+          delay={400}
+        />
+      </div>
+
+      {/* Assigned Cases Table */}
+      <div className={styles.tableSection}>
+        <RequestTable
+          requests={assignedCases}
+          title="Kasus Dalam Penanganan Saya (My Assigned Tasks)"
+          onViewAll={() => router.push('/dashboard/assigned-cases')}
+          onDetails={(req) => alert(`Open Workspace for Request #${req.requestNo}\n\n${req.useCase}\n\nPriority: ${req.priority}\nStatus: ${req.status}`)}
+          maxRows={5}
+        />
+      </div>
+    </>
+  );
+}
+
+/* ============================================
+   MAIN DASHBOARD PAGE
+   ============================================ */
+export default function DashboardPage() {
+  const { user } = useAuth();
+
+  // Role-specific greeting
+  const greetingSubtext = (() => {
+    switch (user?.role) {
+      case 'staf_pemeriksa':
+        return 'Mari pantau status permintaan pemeriksaan Anda';
+      case 'supervisor':
+        return 'Pantau kinerja dan beban kerja tim laboratorium';
+      case 'analis_lab':
+        return 'Kelola kasus yang ditugaskan dan lanjutkan analisis';
+      default:
+        return 'Selamat datang kembali!';
+    }
+  })();
 
   return (
     <div className={styles.page}>
@@ -46,53 +259,16 @@ export default function DashboardPage() {
             <span className={styles.wave}>👋</span>
           </h1>
           <p className={styles.greetingSubtext}>
-            Selamat datang kembali! Mari pantau progres pemeriksaan hari ini
+            {greetingSubtext}
           </p>
         </div>
         <img src="/images/flag.png" alt="Indonesian Flag" className={styles.flagImg} />
       </div>
 
-      {/* Stats Grid */}
-      <div className={styles.statsGrid}>
-        <StatCard
-          value={mockDashboardStats.totalTasks}
-          label="Total Tasks"
-          icon={<ClipboardList size={22} />}
-          color="blue"
-          delay={100}
-        />
-        <StatCard
-          value={mockDashboardStats.inProgress}
-          label="In Progress"
-          icon={<Loader2 size={22} />}
-          color="orange"
-          delay={200}
-        />
-        <StatCard
-          value={mockDashboardStats.completed}
-          label="Completed"
-          icon={<CheckCircle2 size={22} />}
-          color="green"
-          delay={300}
-        />
-        <StatCard
-          value={mockDashboardStats.pending}
-          label="Pending Review"
-          icon={<Clock size={22} />}
-          color="red"
-          delay={400}
-        />
-      </div>
-
-      {/* Request Table — Full Width */}
-      <div className={styles.tableSection}>
-        <RequestTable
-          requests={visibleRequests}
-          onViewAll={() => router.push('/dashboard/my-request')}
-          onDetails={(req) => alert(`Detail Request #${req.requestNo}\n\n${req.useCase}\n\nStatus: ${req.status}\nDeskripsi: ${req.description}`)}
-          maxRows={5}
-        />
-      </div>
+      {/* Role-Based Dashboard View */}
+      {user?.role === 'staf_pemeriksa' && <StafPemeriksaDashboard />}
+      {user?.role === 'supervisor' && <SupervisorDashboard />}
+      {user?.role === 'analis_lab' && <AnalisLabDashboard />}
     </div>
   );
 }

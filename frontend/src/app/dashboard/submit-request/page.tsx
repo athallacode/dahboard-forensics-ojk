@@ -1,7 +1,6 @@
 'use client';
 
 import { useState } from 'react';
-import { Send, FileText, Smartphone, Laptop, HardDrive, PackageOpen } from 'lucide-react';
 import styles from './submit-request.module.css';
 
 export default function SubmitRequestPage() {
@@ -24,10 +23,6 @@ export default function SubmitRequestPage() {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleRadio = (val: string) => {
-    setFormData((prev) => ({ ...prev, lingkup: val }));
-  };
-
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     alert('Request Submitted successfully!');
@@ -36,10 +31,8 @@ export default function SubmitRequestPage() {
   return (
     <div className={styles.page}>
       <div className={styles.header}>
-        <div>
-          <h1 className={styles.title}>Submit Forensics Request</h1>
-          <p className={styles.subtitle}>Lengkapi informasi berikut untuk memulai proses analisa digital</p>
-        </div>
+        <h1 className={styles.title}>Submit Forensics Request</h1>
+        <p className={styles.subtitle}>Lengkapi informasi berikut untuk mengajukan permohonan layanan</p>
       </div>
 
       <form className={styles.formContainer} onSubmit={handleSubmit}>
@@ -47,25 +40,24 @@ export default function SubmitRequestPage() {
         {/* Section 1: Informasi Pemohon */}
         <div className={styles.card}>
           <div className={styles.cardHeader}>
-            <div className={styles.iconBox}><FileText size={20} /></div>
-            <h2 className={styles.cardTitle}>Informasi Pemohon</h2>
+            <h2 className={styles.cardTitle}>1. Informasi Pemohon</h2>
           </div>
           <div className={styles.grid}>
             <div className={styles.inputWrapper}>
-              <label className={styles.label}>Nama Lengkap</label>
-              <input className={styles.input} type="text" name="nama" placeholder="Masukkan nama lengkap" value={formData.nama} onChange={handleChange} />
-            </div>
-            <div className={styles.inputWrapper}>
-              <label className={styles.label}>NIP</label>
-              <input className={styles.input} type="text" name="nip" placeholder="Masukkan NIP" value={formData.nip} onChange={handleChange} />
+              <label className={styles.label}>Nama</label>
+              <input className={styles.input} type="text" name="nama" value={formData.nama} onChange={handleChange} />
             </div>
             <div className={styles.inputWrapper}>
               <label className={styles.label}>Jabatan</label>
-              <input className={styles.input} type="text" name="jabatan" placeholder="Masukkan jabatan" value={formData.jabatan} onChange={handleChange} />
+              <input className={styles.input} type="text" name="jabatan" value={formData.jabatan} onChange={handleChange} />
+            </div>
+            <div className={styles.inputWrapper}>
+              <label className={styles.label}>NIP</label>
+              <input className={styles.input} type="text" name="nip" value={formData.nip} onChange={handleChange} />
             </div>
             <div className={styles.inputWrapper}>
               <label className={styles.label}>Satuan Kerja</label>
-              <input className={styles.input} type="text" name="satuanKerja" placeholder="Masukkan satuan kerja" value={formData.satuanKerja} onChange={handleChange} />
+              <input className={styles.input} type="text" name="satuanKerja" value={formData.satuanKerja} onChange={handleChange} />
             </div>
           </div>
         </div>
@@ -73,25 +65,34 @@ export default function SubmitRequestPage() {
         {/* Section 2: Informasi Permohonan */}
         <div className={styles.card}>
           <div className={styles.cardHeader}>
-            <div className={styles.iconBox}><PackageOpen size={20} /></div>
-            <h2 className={styles.cardTitle}>Detail Permohonan</h2>
+            <h2 className={styles.cardTitle}>2. Informasi Permohonan</h2>
           </div>
           <div className={styles.grid}>
             <div className={styles.inputWrapper}>
               <label className={styles.label}>Lingkup Permohonan</label>
-              <div className={styles.segmentedControl}>
-                <div 
-                  className={`${styles.segment} ${formData.lingkup === 'baru' ? styles.segmentActive : ''}`}
-                  onClick={() => handleRadio('baru')}
-                >
+              <div className={styles.radioGroup}>
+                <label className={styles.radioLabel}>
+                  <input 
+                    type="radio" 
+                    name="lingkup" 
+                    value="baru" 
+                    checked={formData.lingkup === 'baru'} 
+                    onChange={handleChange} 
+                    className={styles.radioInput}
+                  />
                   Permohonan Baru
-                </div>
-                <div 
-                  className={`${styles.segment} ${formData.lingkup === 'tambahan' ? styles.segmentActive : ''}`}
-                  onClick={() => handleRadio('tambahan')}
-                >
+                </label>
+                <label className={styles.radioLabel}>
+                  <input 
+                    type="radio" 
+                    name="lingkup" 
+                    value="tambahan" 
+                    checked={formData.lingkup === 'tambahan'} 
+                    onChange={handleChange} 
+                    className={styles.radioInput}
+                  />
                   Tambahan Lingkup
-                </div>
+                </label>
               </div>
             </div>
             <div className={styles.inputWrapper}>
@@ -103,45 +104,36 @@ export default function SubmitRequestPage() {
               </select>
             </div>
           </div>
-          <div className={`${styles.inputWrapper} ${styles.mt4}`}>
+          <div className={`${styles.inputWrapper} ${styles.mt3}`}>
             <label className={styles.label}>Tambahan Informasi</label>
             <textarea 
               className={styles.textarea} 
               name="tambahanInformasi" 
-              rows={4} 
-              placeholder="Berikan detail tambahan yang relevan dengan kasus..."
               value={formData.tambahanInformasi} 
               onChange={handleChange} 
             />
           </div>
         </div>
 
-        {/* Section 3: Barang Bukti */}
-        <div className={styles.card}>
-          <div className={styles.cardHeader}>
-            <div className={styles.iconBox}><HardDrive size={20} /></div>
-            <h2 className={styles.cardTitle}>Identitas Barang Bukti</h2>
-          </div>
-          <div className={styles.grid}>
-            <div className={styles.inputWrapper}>
-              <label className={styles.label}>Jenis Barang Bukti</label>
-              <div className={styles.visualSelect}>
-                {['Handphone', 'Laptop', 'Hard Disk'].map((type) => (
-                  <div 
-                    key={type}
-                    className={`${styles.visualOption} ${formData.jenisBarangBukti === type ? styles.visualOptionActive : ''}`}
-                    onClick={() => setFormData(prev => ({ ...prev, jenisBarangBukti: type }))}
-                  >
-                    {type === 'Handphone' && <Smartphone size={24} />}
-                    {type === 'Laptop' && <Laptop size={24} />}
-                    {type === 'Hard Disk' && <HardDrive size={24} />}
-                    <span>{type}</span>
-                  </div>
-                ))}
-              </div>
+        {/* Section 3: Barang Bukti and Actions */}
+        <div className={styles.bottomSection}>
+          <div className={styles.section3Card}>
+            <div className={styles.cardHeader}>
+              <h2 className={styles.cardTitle}>3. Identitas Barang Bukti</h2>
             </div>
-            
-            <div className={styles.gridInner}>
+            <div className={styles.grid}>
+              <div className={styles.inputWrapper}>
+                <label className={styles.label}>Jenis Barang Bukti</label>
+                <select className={styles.select} name="jenisBarangBukti" value={formData.jenisBarangBukti} onChange={handleChange}>
+                  <option>Handphone</option>
+                  <option>Laptop</option>
+                  <option>Hard Disk</option>
+                </select>
+              </div>
+              <div className={styles.inputWrapper}>
+                <label className={styles.label}>Merk / Model</label>
+                <input className={styles.input} type="text" name="merkModel" value={formData.merkModel} onChange={handleChange} />
+              </div>
               <div className={styles.inputWrapper}>
                 <label className={styles.label}>Kondisi Barang Bukti</label>
                 <select className={styles.select} name="kondisiBarangBukti" value={formData.kondisiBarangBukti} onChange={handleChange}>
@@ -151,24 +143,16 @@ export default function SubmitRequestPage() {
                 </select>
               </div>
               <div className={styles.inputWrapper}>
-                <label className={styles.label}>Merk / Model</label>
-                <input className={styles.input} type="text" name="merkModel" placeholder="Misal: iPhone 14 Pro" value={formData.merkModel} onChange={handleChange} />
-              </div>
-              <div className={styles.inputWrapper}>
                 <label className={styles.label}>Nomor Seri</label>
-                <input className={styles.input} type="text" name="nomorSeri" placeholder="Masukkan nomor seri" value={formData.nomorSeri} onChange={handleChange} />
+                <input className={styles.input} type="text" name="nomorSeri" value={formData.nomorSeri} onChange={handleChange} />
               </div>
             </div>
           </div>
-        </div>
-
-        {/* Action Buttons */}
-        <div className={styles.formActions}>
-          <button type="button" className={styles.btnSecondary}>Save as Draft</button>
-          <button type="submit" className={styles.btnPrimary}>
-            <span>Submit Request</span>
-            <Send size={18} />
-          </button>
+          
+          <div className={styles.formActions}>
+            <button type="submit" className={styles.btnPrimary}>Submit Request</button>
+            <button type="button" className={styles.btnSecondary}>Save Draft</button>
+          </div>
         </div>
 
       </form>

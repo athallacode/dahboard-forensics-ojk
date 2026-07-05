@@ -2,7 +2,7 @@
 // LPBTI OJK Dashboard — TypeScript Interfaces
 // ============================================
 
-export type UserRole = 'staf_pemeriksa' | 'supervisor' | 'admin';
+export type UserRole = 'staf_pemeriksa' | 'supervisor' | 'analis_lab';
 
 export interface User {
   id: string;

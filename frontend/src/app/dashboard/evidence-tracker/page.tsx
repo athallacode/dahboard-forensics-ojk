@@ -53,14 +53,22 @@ export default function EvidenceTrackerPage() {
     return matchSearch && matchStatus;
   });
 
+  const verifiedCount = evidence.filter((e) => e.status === 'verified').length;
+  const pendingCount = evidence.filter((e) => e.status === 'pending_review').length;
+
   return (
     <div className={styles.page}>
+      {/* Header */}
       <div className={styles.header}>
         <div>
           <h1 className={styles.title}>Evidence Tracker</h1>
           <p className={styles.subtitle}>Pelacakan dan manajemen bukti digital pemeriksaan</p>
         </div>
-        <button className={styles.uploadBtn} onClick={() => setShowUpload(!showUpload)} id="upload-evidence-btn">
+        <button
+          className={styles.uploadBtn}
+          onClick={() => setShowUpload(!showUpload)}
+          id="upload-evidence-btn"
+        >
           <Upload size={16} />
           <span>Upload Evidence</span>
         </button>
@@ -73,25 +81,30 @@ export default function EvidenceTrackerPage() {
           <span className={styles.miniStatLabel}>Total Files</span>
         </div>
         <div className={styles.miniStat}>
-          <span className={`${styles.miniStatValue} ${styles.verified}`}>{evidence.filter((e) => e.status === 'verified').length}</span>
+          <span className={`${styles.miniStatValue} ${styles.verified}`}>{verifiedCount}</span>
           <span className={styles.miniStatLabel}>Verified</span>
         </div>
         <div className={styles.miniStat}>
-          <span className={`${styles.miniStatValue} ${styles.pendingVal}`}>{evidence.filter((e) => e.status === 'pending_review').length}</span>
+          <span className={`${styles.miniStatValue} ${styles.pendingVal}`}>{pendingCount}</span>
           <span className={styles.miniStatLabel}>Pending Review</span>
         </div>
       </div>
 
-      {/* Upload Zone */}
+      {/* Upload Zone (Expandable) */}
       {showUpload && (
         <div className={styles.uploadZone}>
           <div className={styles.uploadContent}>
-            <Shield size={40} />
+            <Shield size={40} className={styles.shieldIcon} />
             <h3>Upload Bukti Digital</h3>
             <p>File akan dienkripsi dan disimpan dengan audit trail immutable</p>
             <div className={styles.uploadArea}>
               <Upload size={24} />
-              <span>Drag & drop atau <label htmlFor="evidence-file" className={styles.browseLink}>pilih file</label></span>
+              <span>
+                Drag &amp; drop atau{' '}
+                <label htmlFor="evidence-file" className={styles.browseLink}>
+                  pilih file
+                </label>
+              </span>
               <input id="evidence-file" type="file" multiple className={styles.fileInput} />
             </div>
             <div className={styles.uploadMeta}>
@@ -106,7 +119,7 @@ export default function EvidenceTrackerPage() {
         </div>
       )}
 
-      {/* Filters */}
+      {/* Search & Filters */}
       <div className={styles.filters}>
         <div className={styles.searchBox}>
           <Search size={18} className={styles.searchIcon} />
@@ -140,6 +153,7 @@ export default function EvidenceTrackerPage() {
             className={`${styles.evidenceCard} animate-fadeInUp`}
             style={{ animationDelay: `${index * 60}ms`, animationFillMode: 'both' }}
           >
+            {/* Top: Icon + Status */}
             <div className={styles.cardTop}>
               <div className={styles.fileIcon}>
                 {fileIcons[file.fileType] || <FileText size={20} />}
@@ -149,20 +163,31 @@ export default function EvidenceTrackerPage() {
                 {file.status === 'verified' ? 'Verified' : file.status === 'pending_review' ? 'Pending' : 'Rejected'}
               </span>
             </div>
+
+            {/* Middle: Filename + Meta */}
             <h4 className={styles.fileName}>{file.fileName}</h4>
             <div className={styles.fileMeta}>
               <span>{file.fileType}</span>
               <span>•</span>
               <span>{file.fileSize}</span>
             </div>
+
+            {/* Info: Request & Version */}
             <div className={styles.fileInfo}>
               <span>Request #{file.requestNo}</span>
               <span>v{file.version}</span>
             </div>
+
+            {/* Footer: Uploader + Actions */}
             <div className={styles.fileFooter}>
-              <span className={styles.uploadInfo}>
-                {file.uploadedBy.split(' ')[0]} • {file.uploadedAt}
-              </span>
+              <div className={styles.uploaderInfo}>
+                <div className={styles.uploaderAvatar}>
+                  {file.uploadedBy.charAt(0)}
+                </div>
+                <span className={styles.uploadInfoText}>
+                  {file.uploadedBy.split(' ')[0]} • {file.uploadedAt}
+                </span>
+              </div>
               <div className={styles.fileActions}>
                 <button className={styles.iconAction} title="Lihat">
                   <Eye size={14} />
