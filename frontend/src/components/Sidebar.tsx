@@ -14,6 +14,7 @@ import {
   Activity,
   ClipboardCheck,
   Microscope,
+  PackageCheck,
 } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
 import type { UserRole } from '@/types';
@@ -27,11 +28,12 @@ interface MenuItem {
 
 // Role-based menu configurations
 const menuConfig: Record<UserRole, MenuItem[]> = {
+  // Pemohon TIDAK punya Evidence Tracker: inventaris file hasil akuisisi adalah
+  // dokumen kerja internal Lab. Pemantauan pemohon cukup lewat My Request (Progress Tracking).
   staf_pemeriksa: [
     { icon: <LayoutDashboard size={20} />, label: 'Dashboard', href: '/dashboard' },
     { icon: <FileText size={20} />, label: 'My Request', href: '/dashboard/my-request' },
     { icon: <FilePlus2 size={20} />, label: 'Submit Request', href: '/dashboard/submit-request' },
-    { icon: <Search size={20} />, label: 'Evidence Tracker', href: '/dashboard/evidence-tracker' },
     { icon: <BarChart3 size={20} />, label: 'Report', href: '/dashboard/report' },
     { icon: <BookOpen size={20} />, label: 'Knowledge Center', href: '/dashboard/knowledge-center' },
     { icon: <Bell size={20} />, label: 'Announcements', href: '/dashboard/announcements' },
@@ -40,16 +42,28 @@ const menuConfig: Record<UserRole, MenuItem[]> = {
   supervisor: [
     { icon: <LayoutDashboard size={20} />, label: 'Dashboard', href: '/dashboard' },
     { icon: <Activity size={20} />, label: 'Workload Monitoring', href: '/dashboard/workload-monitoring' },
-    { icon: <ClipboardCheck size={20} />, label: 'Case Assignment', href: '/dashboard/case-assignment' },
+    { icon: <ClipboardCheck size={20} />, label: 'Verifikasi Permohonan', href: '/dashboard/case-assignment' },
+    { icon: <FileText size={20} />, label: 'Pengesahan Laporan', href: '/dashboard/report-review' },
     { icon: <Search size={20} />, label: 'Evidence Tracker', href: '/dashboard/evidence-tracker' },
-    { icon: <BarChart3 size={20} />, label: 'Report', href: '/dashboard/report' },
+    { icon: <BarChart3 size={20} />, label: 'Arsip Laporan', href: '/dashboard/report' },
+    { icon: <BookOpen size={20} />, label: 'Knowledge Center', href: '/dashboard/knowledge-center' },
+    { icon: <Bell size={20} />, label: 'Announcements', href: '/dashboard/announcements' },
+    { icon: <HelpCircle size={20} />, label: 'Help & FAQ', href: '/dashboard/help' },
+  ],
+  manajer_teknis: [
+    { icon: <LayoutDashboard size={20} />, label: 'Dashboard', href: '/dashboard' },
+    { icon: <ClipboardCheck size={20} />, label: 'Penugasan Kasus', href: '/dashboard/case-assignment' },
+    { icon: <FileText size={20} />, label: 'Review Teknis', href: '/dashboard/report-review' },
+    { icon: <Activity size={20} />, label: 'Workload Monitoring', href: '/dashboard/workload-monitoring' },
+    { icon: <Search size={20} />, label: 'Evidence Tracker', href: '/dashboard/evidence-tracker' },
     { icon: <BookOpen size={20} />, label: 'Knowledge Center', href: '/dashboard/knowledge-center' },
     { icon: <Bell size={20} />, label: 'Announcements', href: '/dashboard/announcements' },
     { icon: <HelpCircle size={20} />, label: 'Help & FAQ', href: '/dashboard/help' },
   ],
   analis_lab: [
     { icon: <LayoutDashboard size={20} />, label: 'Dashboard', href: '/dashboard' },
-    { icon: <Microscope size={20} />, label: 'Assigned Cases', href: '/dashboard/assigned-cases' },
+    { icon: <Microscope size={20} />, label: 'Workspace SFD', href: '/dashboard/analis-workspace' },
+    { icon: <PackageCheck size={20} />, label: 'Penerimaan Barang', href: '/dashboard/case-assignment' },
     { icon: <Search size={20} />, label: 'Evidence Tracker', href: '/dashboard/evidence-tracker' },
     { icon: <BarChart3 size={20} />, label: 'Report', href: '/dashboard/report' },
     { icon: <BookOpen size={20} />, label: 'Knowledge Center', href: '/dashboard/knowledge-center' },
@@ -72,7 +86,9 @@ export default function Sidebar({ collapsed: _collapsed, onToggle: _onToggle }: 
 
   const isActive = (href: string) => {
     if (href === '/dashboard') return pathname === '/dashboard';
-    return pathname.startsWith(href);
+    // Exact match atau sub-path dengan pembatas '/' —
+    // mencegah '/dashboard/report' ikut aktif saat di '/dashboard/report-review'
+    return pathname === href || pathname.startsWith(href + '/');
   };
 
   return (

@@ -34,12 +34,12 @@
 .menuItem {
   display: flex;
   align-items: center;
-  gap: var(--space-4);
-  padding: var(--space-4) var(--space-5);
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
   border-radius: var(--radius-lg);
   color: var(--color-neutral-600);
   font-weight: 500;
-  font-size: var(--text-base);
+  font-size: var(--text-sm); /* muat label panjang spt "Workload Monitoring" tanpa terpotong */
   transition: all var(--transition-fast);
   position: relative;
   white-space: nowrap;

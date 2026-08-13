@@ -1,0 +1,104 @@
+/* ============================================
+   Access Denied Page Styles
+   ============================================ */
+
+.page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background: var(--color-neutral-50);
+  background-image: radial-gradient(circle at center, rgba(227, 38, 38, 0.03) 0%, transparent 70%);
+}
+
+.container {
+  background: var(--color-neutral-0);
+  padding: var(--space-10) var(--space-8);
+  border-radius: var(--radius-2xl);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05);
+  border: 1px solid var(--color-neutral-200);
+  width: 100%;
+  max-width: 480px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  animation: fadeInUp 0.5s ease-out;
+}
+
+.logoWrapper {
+  margin-bottom: var(--space-8);
+}
+
+.logo {
+  width: 160px;
+  height: auto;
+}
+
+.iconCircle {
+  width: 96px;
+  height: 96px;
+  background: var(--color-danger-50);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: var(--space-6);
+  position: relative;
+}
+
+.iconCircle::after {
+  content: '';
+  position: absolute;
+  top: -12px;
+  left: -12px;
+  right: -12px;
+  bottom: -12px;
+  border: 1px dashed var(--color-danger-200);
+  border-radius: 50%;
+  animation: spin 10s linear infinite;
+}
+
+.lockIcon {
+  color: var(--color-danger-600);
+}
+
+.title {
+  font-family: var(--font-heading);
+  font-size: var(--text-2xl);
+  font-weight: 800;
+  color: var(--color-neutral-900);
+  margin-bottom: var(--space-3);
+  letter-spacing: -0.02em;
+}
+
+.message {
+  font-size: var(--text-base);
+  color: var(--color-neutral-600);
+  line-height: 1.6;
+  margin-bottom: var(--space-8);
+}
+
+.retryBtn {
+  padding: 12px 32px;
+  background: transparent;
+  color: var(--color-primary-600);
+  border: 2px solid var(--color-primary-600);
+  border-radius: var(--radius-full);
+  font-size: var(--text-base);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.retryBtn:hover {
+  background: var(--color-primary-50);
+  color: var(--color-primary-700);
+  border-color: var(--color-primary-700);
+  transform: translateY(-1px);
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}

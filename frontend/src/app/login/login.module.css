@@ -11,8 +11,8 @@
 /* Left Panel */
 .leftPanel {
   position: relative;
-  flex: 0 0 63%;
-  background: url('/images/login-bg.png') center center / cover no-repeat;
+  flex: 0 0 55%;
+  background: linear-gradient(135deg, #a40000 0%, #4a0000 100%);
   display: flex;
   align-items: flex-start;
   justify-content: flex-start;
@@ -87,7 +87,7 @@
 
 /* Right Panel */
 .rightPanel {
-  flex: 0 0 37%;
+  flex: 0 0 45%;
   display: flex;
   align-items: flex-start; /* Mengatur alignment ke atas */
   justify-content: center;
@@ -307,4 +307,87 @@
     flex: none;
     padding: var(--space-6);
   }
+}
+
+/* MFA Specific Styles */
+.mfaSubtitle {
+  font-size: 0.95rem;
+  color: var(--color-neutral-500);
+  margin-top: var(--space-2);
+  line-height: 1.5;
+}
+
+.otpContainer {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-2);
+  margin: var(--space-4) 0 var(--space-6);
+}
+
+.otpInput {
+  width: 50px;
+  height: 60px;
+  border: 1px solid var(--color-neutral-200);
+  border-radius: var(--radius-md);
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--color-neutral-900);
+  background: var(--color-neutral-0);
+  transition: all var(--transition-fast);
+}
+
+.otpInput:focus {
+  outline: none;
+  border-color: var(--color-primary-400);
+  box-shadow: 0 0 0 3px rgba(204, 0, 0, 0.1);
+}
+
+.resendBox {
+  margin-top: var(--space-4);
+  text-align: center;
+}
+
+.resendLink {
+  background: none;
+  border: none;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--color-accent-600);
+  cursor: pointer;
+  transition: color var(--transition-fast);
+}
+
+.resendLink:hover {
+  color: var(--color-accent-800);
+  text-decoration: underline;
+}
+
+/* ===== Background panel kiri (tekstur halus, tanpa konten) ===== */
+.leftPanel::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 60% 50% at 12% 8%, rgba(255, 255, 255, 0.10) 0%, transparent 60%),
+    radial-gradient(ellipse 70% 60% at 95% 100%, rgba(0, 0, 0, 0.30) 0%, transparent 65%);
+  pointer-events: none;
+}
+
+.leftPanel::after {
+  content: '';
+  position: absolute;
+  right: -180px;
+  bottom: -180px;
+  width: 640px;
+  height: 640px;
+  border-radius: 50%;
+  background: repeating-radial-gradient(
+    circle at center,
+    transparent 0px,
+    transparent 54px,
+    rgba(255, 255, 255, 0.035) 54px,
+    rgba(255, 255, 255, 0.035) 56px
+  );
+  pointer-events: none;
 }

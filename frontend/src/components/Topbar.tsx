@@ -48,7 +48,8 @@ export default function Topbar() {
     switch (role) {
       case 'staf_pemeriksa': return 'Pemohon';
       case 'supervisor': return 'Kepala Lab';
-      case 'analis_lab': return 'Pemeriksa';
+      case 'manajer_teknis': return 'Manajer Teknis';
+      case 'analis_lab': return 'SFD';
       default: return role;
     }
   };
@@ -89,7 +90,8 @@ export default function Topbar() {
           >
             <option value="staf_pemeriksa">Pemohon (Staf Pemeriksa)</option>
             <option value="supervisor">Kepala Lab (Supervisor)</option>
-            <option value="analis_lab">Pemeriksa (Analis Lab)</option>
+            <option value="manajer_teknis">Manajer Teknis</option>
+            <option value="analis_lab">SFD (Spesialis Forensik Digital)</option>
           </select>
         </div>
 

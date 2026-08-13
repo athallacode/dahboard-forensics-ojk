@@ -11,7 +11,8 @@ interface StatusBadgeProps {
 const statusLabels: Record<RequestStatus, string> = {
   completed: 'Completed',
   on_progress: 'On Progress',
-  pending: 'Pending',
+  action_required: 'Action Required',
+  pending_review: 'Pending Review',
   rejected: 'Rejected',
 };
 

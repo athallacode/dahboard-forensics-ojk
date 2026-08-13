@@ -30,7 +30,7 @@ function StafPemeriksaDashboard() {
   const myRequests = mockRequests.filter((r) => r.createdBy === user?.id);
   const myInProgress = myRequests.filter((r) => r.status === 'on_progress').length;
   const myCompleted = myRequests.filter((r) => r.status === 'completed').length;
-  const myPending = myRequests.filter((r) => r.status === 'pending').length;
+  const myPending = myRequests.filter((r) => r.status === 'action_required').length;
 
   return (
     <>
@@ -84,9 +84,8 @@ function StafPemeriksaDashboard() {
 function SupervisorDashboard() {
   const router = useRouter();
 
-  const totalTasks = mockDashboardStats.totalTasks;
-  const inProgress = mockRequests.filter((r) => r.status === 'on_progress').length;
-  const completed = mockRequests.filter((r) => r.status === 'completed').length;
+  // Satu sumber data: mockDashboardStats (angka rekap seluruh lab)
+  const { totalTasks, inProgress, completed } = mockDashboardStats;
 
   return (
     <>
@@ -127,7 +126,7 @@ function SupervisorDashboard() {
         <RequestTable
           requests={mockRequests}
           title="Overview Lab — Semua Permintaan"
-          onViewAll={() => router.push('/dashboard/workload-monitoring')}
+          onViewAll={() => router.push('/dashboard/case-assignment')}
           onDetails={(req) => alert(`Detail Request #${req.requestNo}\n\n${req.useCase}\n\nAssigned: ${req.assignedTo}\nStatus: ${req.status}`)}
           maxRows={5}
         />
@@ -148,7 +147,7 @@ function SupervisorDashboard() {
           onClick={() => router.push('/dashboard/case-assignment')}
         >
           <ClipboardList size={18} />
-          <span>Case Assignment</span>
+          <span>Verifikasi Permohonan</span>
           <ArrowRight size={16} />
         </button>
       </div>
@@ -163,7 +162,7 @@ function AnalisLabDashboard() {
 
   // Cases assigned to this analyst
   const assignedCases = mockRequests.filter((r) => r.assignedTo === user?.name);
-  const pendingReview = assignedCases.filter((r) => r.status === 'pending').length;
+  const pendingReview = assignedCases.filter((r) => r.status === 'pending_review').length;
   const completedByMe = assignedCases.filter((r) => r.status === 'completed').length;
   const highPriority = assignedCases.filter((r) => r.priority === 'high').length;
 
@@ -206,8 +205,8 @@ function AnalisLabDashboard() {
         <RequestTable
           requests={assignedCases}
           title="Kasus Dalam Penanganan Saya (My Assigned Tasks)"
-          onViewAll={() => router.push('/dashboard/assigned-cases')}
-          onDetails={(req) => alert(`Open Workspace for Request #${req.requestNo}\n\n${req.useCase}\n\nPriority: ${req.priority}\nStatus: ${req.status}`)}
+          onViewAll={() => router.push('/dashboard/analis-workspace')}
+          onDetails={(req) => router.push(`/dashboard/analis-workspace?requestId=${req.id}`)}
           maxRows={5}
         />
       </div>
@@ -228,6 +227,8 @@ export default function DashboardPage() {
         return 'Mari pantau status permintaan pemeriksaan Anda';
       case 'supervisor':
         return 'Pantau kinerja dan beban kerja tim laboratorium';
+      case 'manajer_teknis':
+        return 'Tugaskan kasus dan review kelayakan teknis laporan SFD';
       case 'analis_lab':
         return 'Kelola kasus yang ditugaskan dan lanjutkan analisis';
       default:
@@ -254,9 +255,9 @@ export default function DashboardPage() {
       <div className={styles.banner}>
         <div className={styles.bannerContent}>
           <h1 className={styles.greeting}>
-            <span className={styles.greetingDark}>Halo {user?.name?.split(' ')[0] || 'User'} </span>
-            <span className={styles.greetingMaroon}>{user?.name?.split(' ').slice(1).join(' ') || ''}</span>
-            <span className={styles.wave}>👋</span>
+            <span className={styles.greetingDark}>Halo </span>
+            <span className={styles.greetingMaroon}>{user?.name || 'User'}</span>
+            <span className={styles.wave}> 👋</span>
           </h1>
           <p className={styles.greetingSubtext}>
             {greetingSubtext}
@@ -267,7 +268,8 @@ export default function DashboardPage() {
 
       {/* Role-Based Dashboard View */}
       {user?.role === 'staf_pemeriksa' && <StafPemeriksaDashboard />}
-      {user?.role === 'supervisor' && <SupervisorDashboard />}
+      {/* Manajer Teknis memakai tampilan tim yang sama dengan Kepala Lab */}
+      {(user?.role === 'supervisor' || user?.role === 'manajer_teknis') && <SupervisorDashboard />}
       {user?.role === 'analis_lab' && <AnalisLabDashboard />}
     </div>
   );

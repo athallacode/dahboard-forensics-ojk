@@ -1,161 +1,255 @@
 'use client';
 
 import { useState } from 'react';
-import styles from './knowledge-center.module.css';
 import { 
-  FileCheck, Building2, Landmark, ShieldCheck, Banknote, 
-  ChevronDown, ArrowRight, Laptop, Smartphone, MessageSquareText
+  BookOpen, 
+  ChevronDown, 
+  ChevronUp, 
+  FileText, 
+  Video,
+  Download,
+  ShieldAlert,
+  Search,
+  CheckCircle2,
+  Briefcase,
+  HelpCircle,
+  Clock,
+  Landmark
 } from 'lucide-react';
+import styles from './knowledge.module.css';
+import { useCases, services, resources, guidelines } from '@/data/knowledgeCenter';
 
 export default function KnowledgeCenterPage() {
-  const [activeTab, setActiveTab] = useState('Use Cases');
-  const [expandedRow, setExpandedRow] = useState<number | null>(3); 
+  const [activeTab, setActiveTab] = useState<'usecases' | 'services' | 'resources' | 'guidelines'>('usecases');
+  const [expandedRow, setExpandedRow] = useState<string | null>(null);
+  const [expandedAccordion, setExpandedAccordion] = useState<string | null>(null);
+  const [searchQuery, setSearchQuery] = useState('');
 
-  const tabs = ['Use Cases', 'Services', 'Resources', 'Guidelines'];
+  const toggleRow = (id: string) => {
+    setExpandedRow(prev => prev === id ? null : id);
+  };
 
-  const rows = [
-    {
-      id: 0,
-      useCase: 'Pemeriksaan Perangkat Handphone',
-      sector: 'Perbankan, Pasar Modal, Asuransi, IAKD',
-      icon: <Smartphone className={styles.rowIconSvg} size={24} />
-    },
-    {
-      id: 1,
-      useCase: 'Pemeriksaan Perangkat Komputer',
-      sector: 'Perbankan, Pasar Modal, Asuransi, IAKD',
-      icon: <Laptop className={styles.rowIconSvg} size={24} />
-    },
-    {
-      id: 2,
-      useCase: 'Pemeriksaan Komunikasi Digital',
-      sector: 'Perbankan, Pasar Modal, Asuransi, IAKD',
-      icon: <MessageSquareText className={styles.rowIconSvg} size={24} />
-    },
-    {
-      id: 3,
-      useCase: 'Validasi Dokumen Elektronik',
-      sector: 'Perbankan, Pasar Modal, Asuransi, IAKD',
-      icon: <FileCheck className={styles.rowIconSvg} size={24} />
-    },
-  ];
+  const toggleAccordion = (id: string) => {
+    setExpandedAccordion(prev => prev === id ? null : id);
+  };
 
-  const toggleRow = (id: number) => {
-    setExpandedRow(expandedRow === id ? null : id);
+  const getResourceIcon = (type: string) => {
+    if (type === 'VIDEO') return <Video size={24} />;
+    return <FileText size={24} />;
   };
 
   return (
     <div className={styles.page}>
       
+      {/* Header */}
       <div className={styles.header}>
-        <h1 className={styles.title}>Knowledge Center</h1>
-        <p className={styles.subtitle}>Eksplorasi use cases, layanan, dan panduan forensik digital</p>
-      </div>
-
-      {/* Modern Tabs */}
-      <div className={styles.tabsWrapper}>
-        <div className={styles.tabs}>
-          {tabs.map((tab) => (
-            <button
-              key={tab}
-              className={`${styles.tab} ${activeTab === tab ? styles.activeTab : ''}`}
-              onClick={() => setActiveTab(tab)}
-            >
-              {tab}
-            </button>
-          ))}
+        <div>
+          <h1 className={styles.title}>Knowledge Center</h1>
+          <p className={styles.subtitle}>Pusat informasi, panduan teknis, dan layanan Laboratorium Forensik IT OJK</p>
+        </div>
+        <div className={styles.searchBox}>
+          <Search size={18} className={styles.searchIcon} />
+          <input 
+            type="text" 
+            placeholder="Cari referensi..." 
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className={styles.searchInput}
+          />
         </div>
       </div>
 
-      {/* Content Area */}
-      <div className={styles.content}>
-        {activeTab === 'Use Cases' && (
-          <div className={styles.cardsList}>
-            {rows.map((row) => (
-              <div 
-                key={row.id} 
-                className={`${styles.cardWrapper} ${expandedRow === row.id ? styles.cardExpanded : ''}`}
-              >
-                {/* Visible Row */}
-                <div className={styles.cardHeader} onClick={() => toggleRow(row.id)}>
+      {/* Tabs */}
+      <div className={styles.tabsContainer}>
+        <button 
+          className={`${styles.tabBtn} ${activeTab === 'usecases' ? styles.activeTab : ''}`}
+          onClick={() => { setActiveTab('usecases'); setExpandedRow(null); }}
+        >
+          <BookOpen size={16} /> Use Cases
+        </button>
+        <button 
+          className={`${styles.tabBtn} ${activeTab === 'services' ? styles.activeTab : ''}`}
+          onClick={() => { setActiveTab('services'); setExpandedRow(null); }}
+        >
+          <Briefcase size={16} /> Services
+        </button>
+        <button 
+          className={`${styles.tabBtn} ${activeTab === 'resources' ? styles.activeTab : ''}`}
+          onClick={() => { setActiveTab('resources'); }}
+        >
+          <Download size={16} /> Resources
+        </button>
+        <button 
+          className={`${styles.tabBtn} ${activeTab === 'guidelines' ? styles.activeTab : ''}`}
+          onClick={() => { setActiveTab('guidelines'); }}
+        >
+          <HelpCircle size={16} /> Guidelines
+        </button>
+      </div>
+
+      {/* Tab 1: Use Cases */}
+      {activeTab === 'usecases' && (
+        <div className={styles.tabContent}>
+          <div className={styles.tableCard}>
+            {useCases.filter(u => u.title.toLowerCase().includes(searchQuery.toLowerCase())).map((item) => (
+              <div key={item.id} className={styles.expandableItem}>
+                
+                {/* Row Header */}
+                <div className={styles.rowHeader} onClick={() => toggleRow(item.id)}>
+                  <div className={styles.rowTitleArea}>
+                    <h3 className={styles.rowTitle}>{item.title}</h3>
+                    <p className={styles.rowDesc}>{item.description}</p>
+                  </div>
                   <div className={styles.rowIcon}>
-                    {row.icon}
-                  </div>
-                  <div className={styles.rowInfo}>
-                    <h3 className={styles.rowTitle}>{row.useCase}</h3>
-                    <p className={styles.rowSector}>Sektor: {row.sector}</p>
-                  </div>
-                  <div className={styles.rowAction}>
-                    <button className={`${styles.expandBtn} ${expandedRow === row.id ? styles.expandBtnActive : ''}`}>
-                      <span>{expandedRow === row.id ? 'Tutup' : 'Lihat Detail'}</span>
-                      <ChevronDown size={18} className={styles.chevron} />
-                    </button>
+                    {expandedRow === item.id ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
                   </div>
                 </div>
 
-                {/* Expanded Content (Glassmorphism / Gradient) */}
-                <div className={styles.expandedContentWrapper}>
-                  <div className={styles.expandedContentInner}>
-                    <div className={styles.expandedGrid}>
-                      
-                      {/* Left: Graphic/Icon */}
-                      <div className={styles.expandedGraphic}>
-                        <div className={styles.graphicCircle}>
-                          <FileCheck size={64} strokeWidth={1.5} color="#4F46E5" />
+                {/* Expanded Detail */}
+                {expandedRow === item.id && (
+                  <div className={styles.expandedDetail}>
+                    <div className={styles.detailGrid}>
+                      <div className={styles.detailBox}>
+                        <div className={styles.detailHeader}>
+                          <ShieldAlert size={16} className={styles.detailIcon} />
+                          <h4>Supervisory Context</h4>
                         </div>
-                        <span className={styles.graphicLabel}>Validasi Keaslian<br/>Dokumen Elektronik</span>
+                        <p>{item.supervisoryContext}</p>
                       </div>
-
-                      {/* Right: Info Sections */}
-                      <div className={styles.expandedInfo}>
-                        
-                        <div className={styles.infoBlock}>
-                          <h4 className={styles.infoTitle}>Supervisory Context</h4>
-                          <p className={styles.infoText}>
-                            Dalam proses pengawasan dan/atau pemeriksaan, terdapat temuan berupa
-                            ketidaksesuaian metadata, timestamp, maupun perubahan pada dokumen
-                            elektronik yang memerlukan validasi lebih lanjut.
-                          </p>
+                      <div className={styles.detailBox}>
+                        <div className={styles.detailHeader}>
+                          <Search size={16} className={styles.detailIcon} />
+                          <h4>Potensi Pemanfaatan</h4>
                         </div>
-
-                        <div className={styles.infoRow}>
-                          <div className={styles.infoBlock}>
-                            <h4 className={styles.infoTitle}>Potensi Pemanfaatan</h4>
-                            <ul className={styles.infoList}>
-                              <li><ArrowRight size={14} className={styles.listIcon}/> Pemeriksaan metadata dokumen</li>
-                              <li><ArrowRight size={14} className={styles.listIcon}/> Validasi keaslian dokumen</li>
-                              <li><ArrowRight size={14} className={styles.listIcon}/> Analisis bukti pendukung</li>
-                            </ul>
-                          </div>
-
-                          <div className={styles.infoBlock}>
-                            <h4 className={styles.infoTitle}>Added Value</h4>
-                            <ul className={styles.infoList}>
-                              <li><ArrowRight size={14} className={styles.listIcon}/> Memvalidasi integritas dokumen</li>
-                              <li><ArrowRight size={14} className={styles.listIcon}/> Technical validation untuk pengawasan</li>
-                            </ul>
-                          </div>
+                        <p>{item.potensiPemanfaatan}</p>
+                      </div>
+                      <div className={styles.detailBox}>
+                        <div className={styles.detailHeader}>
+                          <CheckCircle2 size={16} className={styles.detailIcon} />
+                          <h4>Added Value</h4>
                         </div>
-
-                        <div className={styles.infoBlock}>
-                          <h4 className={styles.infoTitle}>Sektor Relevan</h4>
-                          <div className={styles.sectorBadges}>
-                            <span className={styles.badge}><Landmark size={14}/> Perbankan</span>
-                            <span className={styles.badge}><Building2 size={14}/> Pasar Modal</span>
-                            <span className={styles.badge}><ShieldCheck size={14}/> Asuransi</span>
-                            <span className={styles.badge}><Banknote size={14}/> IAKD</span>
-                          </div>
-                        </div>
-
+                        <p>{item.addedValue}</p>
+                      </div>
+                    </div>
+                    
+                    <div className={styles.sektorBox}>
+                      <strong>Sektor Relevan: </strong>
+                      <div className={styles.sektorList}>
+                        {item.sektorRelevan.map(s => (
+                          <span key={s} className={styles.sektorPill}><Landmark size={12} /> {s}</span>
+                        ))}
                       </div>
                     </div>
                   </div>
-                </div>
+                )}
               </div>
             ))}
           </div>
-        )}
-      </div>
+        </div>
+      )}
+
+      {/* Tab 2: Services */}
+      {activeTab === 'services' && (
+        <div className={styles.tabContent}>
+          <div className={styles.tableCard}>
+            {services.filter(s => s.title.toLowerCase().includes(searchQuery.toLowerCase())).map((item) => (
+              <div key={item.id} className={styles.expandableItem}>
+                <div className={styles.rowHeader} onClick={() => toggleRow(item.id)}>
+                  <div className={styles.rowTitleArea}>
+                    <h3 className={styles.rowTitle}>{item.title}</h3>
+                    <p className={styles.rowDesc}>{item.description}</p>
+                  </div>
+                  <div className={styles.rowIcon}>
+                    {expandedRow === item.id ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+                  </div>
+                </div>
+
+                {expandedRow === item.id && (
+                  <div className={styles.expandedDetail}>
+                    <div className={styles.servicesSplit}>
+                      <div className={styles.deliverablesList}>
+                        <h4>Deliverables (Hasil Layanan):</h4>
+                        <ul>
+                          {item.deliverables.map((del, i) => (
+                            <li key={i}><CheckCircle2 size={14} className={styles.checkIcon} /> {del}</li>
+                          ))}
+                        </ul>
+                      </div>
+                      <div className={styles.slaBox}>
+                        <Clock size={20} className={styles.slaIcon} />
+                        <div className={styles.slaText}>
+                          <span>Estimasi SLA:</span>
+                          <strong>{item.sla}</strong>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Tab 3: Resources */}
+      {activeTab === 'resources' && (
+        <div className={styles.tabContent}>
+          <div className={styles.resourcesGrid}>
+            {resources.filter(r => r.title.toLowerCase().includes(searchQuery.toLowerCase())).map((item) => (
+              <div key={item.id} className={styles.resourceCard}>
+                <div className={styles.resourceLeft}>
+                  <div className={`${styles.resourceIconBox} ${item.type === 'VIDEO' ? styles.videoIconBox : styles.pdfIconBox}`}>
+                    {getResourceIcon(item.type)}
+                  </div>
+                  <div className={styles.resourceInfo}>
+                    <h4>{item.title}</h4>
+                    <div className={styles.resourceMeta}>
+                      <span className={styles.resourceType}>{item.type}</span>
+                      <span>•</span>
+                      <span>{item.size}</span>
+                    </div>
+                  </div>
+                </div>
+                <button className={styles.downloadBtn}>
+                  <Download size={16} /> Download
+                </button>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Tab 4: Guidelines */}
+      {activeTab === 'guidelines' && (
+        <div className={styles.tabContent}>
+          <div className={styles.accordionContainer}>
+            {guidelines.filter(g => g.title.toLowerCase().includes(searchQuery.toLowerCase())).map((item) => (
+              <div key={item.id} className={styles.accordionItem}>
+                <button 
+                  className={`${styles.accordionHeader} ${expandedAccordion === item.id ? styles.accordionActive : ''}`}
+                  onClick={() => toggleAccordion(item.id)}
+                >
+                  <span className={styles.accordionTitle}>{item.title}</span>
+                  {expandedAccordion === item.id ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+                </button>
+                {expandedAccordion === item.id && (
+                  <div className={styles.accordionBody}>
+                    <ol className={styles.stepList}>
+                      {item.steps.map((step, i) => (
+                        <li key={i}>
+                          <span className={styles.stepNumber}>{i+1}</span>
+                          <span className={styles.stepText}>{step}</span>
+                        </li>
+                      ))}
+                    </ol>
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
     </div>
   );
 }

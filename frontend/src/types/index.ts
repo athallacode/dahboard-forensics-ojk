@@ -2,7 +2,10 @@
 // LPBTI OJK Dashboard — TypeScript Interfaces
 // ============================================
 
-export type UserRole = 'staf_pemeriksa' | 'supervisor' | 'analis_lab';
+// 'analis_lab'      : Spesialis Forensik Digital (SFD) — pelaksana teknis
+// 'manajer_teknis'  : review teknis laporan + penugasan kasus ke SFD
+// 'supervisor'      : Kepala Laboratorium — verifikasi permohonan + pengesahan laporan
+export type UserRole = 'staf_pemeriksa' | 'supervisor' | 'manajer_teknis' | 'analis_lab';
 
 export interface User {
   id: string;
@@ -13,7 +16,9 @@ export interface User {
   avatar?: string;
 }
 
-export type RequestStatus = 'completed' | 'on_progress' | 'pending' | 'rejected';
+// 'action_required'  : menunggu tindakan pemohon (mis. melengkapi dokumen)
+// 'pending_review'   : menunggu review/persetujuan supervisor
+export type RequestStatus = 'completed' | 'on_progress' | 'action_required' | 'pending_review' | 'rejected';
 
 export interface ExaminationRequest {
   id: string;

@@ -8,6 +8,7 @@ interface AuthContextType {
   user: User | null;
   isAuthenticated: boolean;
   login: (email: string, password: string) => Promise<boolean>;
+  verifyOtp: (code: string) => Promise<boolean>;
   logout: () => void;
   switchRole: (role: UserRole) => void;
   hasPermission: (permission: string) => boolean;
@@ -21,8 +22,7 @@ const rolePermissions: Record<UserRole, string[]> = {
     'dashboard.view_own',
     'request.view_own',
     'request.create',
-    'evidence.view_own',
-    'evidence.upload',
+    // tanpa akses evidence: inventaris hasil akuisisi = internal Lab; pemohon pantau via My Request
     'report.view',
     'knowledge.read',
     'announcements.read',
@@ -33,20 +33,32 @@ const rolePermissions: Record<UserRole, string[]> = {
     'request.view_team',
     'request.approve',
     'evidence.view_team',
-    'evidence.upload',
+    'evidence.intake', // konfirmasi serah terima barang bukti fisik
     'report.view',
     'report.generate',
+    'report.endorse', // pengesahan akhir laporan hasil
     'knowledge.read',
     'announcements.read',
     'announcements.create',
     'workload.view',
-    'case.assign',
+  ],
+  manajer_teknis: [
+    'dashboard.view_own',
+    'dashboard.view_team',
+    'evidence.view_team',
+    'report.view',
+    'report.review_technical', // review teknis draft laporan SFD
+    'case.assign', // penugasan kasus ke SFD (pindah dari Kepala Lab)
+    'workload.view',
+    'knowledge.read',
+    'announcements.read',
   ],
   analis_lab: [
     'dashboard.view_own',
     'request.view_assigned',
     'evidence.view_own',
-    'evidence.upload',
+    'evidence.intake', // SFD penjaga loket boleh mencatat serah terima
+    'evidence.upload', // unggah hasil akuisisi
     'evidence.analyze',
     'report.view',
     'report.write',
@@ -58,16 +70,27 @@ const rolePermissions: Record<UserRole, string[]> = {
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
+  // Kredensial valid tapi OTP belum diverifikasi — user BELUM terautentikasi
+  const [pendingUser, setPendingUser] = useState<User | null>(null);
 
   const login = useCallback(async (email: string, _password: string): Promise<boolean> => {
-    // Mock login: find user by email or default to first user
+    // Mock login: kredensial valid -> tunggu verifikasi OTP (belum terautentikasi)
     const foundUser = mockUsers.find((u) => u.email === email) || mockUsers[0];
-    setUser(foundUser);
+    setPendingUser(foundUser);
     return true;
   }, []);
 
+  const verifyOtp = useCallback(async (code: string): Promise<boolean> => {
+    // Mock OTP: 6 digit apa pun diterima; user baru terautentikasi di sini
+    if (!pendingUser || code.length !== 6) return false;
+    setUser(pendingUser);
+    setPendingUser(null);
+    return true;
+  }, [pendingUser]);
+
   const logout = useCallback(() => {
     setUser(null);
+    setPendingUser(null);
   }, []);
 
   const switchRole = useCallback((role: UserRole) => {
@@ -91,6 +114,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         user,
         isAuthenticated: !!user,
         login,
+        verifyOtp,
         logout,
         switchRole,
         hasPermission,

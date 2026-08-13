@@ -48,13 +48,13 @@ export default function RequestTable({
             </button>
             {showFilter && (
               <div className={styles.filterDropdown}>
-                {['all', 'completed', 'on_progress', 'pending', 'rejected'].map((s) => (
+                {['all', 'completed', 'on_progress', 'action_required', 'pending_review', 'rejected'].map((s) => (
                   <button
                     key={s}
                     className={`${styles.filterOption} ${filter === s ? styles.activeFilter : ''}`}
                     onClick={() => { setFilter(s as RequestStatus | 'all'); setShowFilter(false); }}
                   >
-                    {s === 'all' ? 'Semua' : s === 'on_progress' ? 'On Progress' : s === 'completed' ? 'Completed' : s === 'pending' ? 'Pending' : 'Rejected'}
+                    {s === 'all' ? 'Semua' : s === 'on_progress' ? 'On Progress' : s === 'completed' ? 'Completed' : s === 'action_required' ? 'Action Required' : s === 'pending_review' ? 'Pending Review' : 'Rejected'}
                   </button>
                 ))}
               </div>

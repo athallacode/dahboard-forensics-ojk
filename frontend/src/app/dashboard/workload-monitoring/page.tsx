@@ -5,8 +5,7 @@ import styles from './workload.module.css';
 
 export default function WorkloadMonitoringPage() {
   const workloads = [
-    { name: 'M. Rizky Ramadhan', role: 'Forensics Analyst', active: 3, inReview: 2, total: 6, capacity: 80, colorClass: styles.barBlue },
-    { name: 'Putri Apriani', role: 'Forensics Analyst', active: 2, inReview: 2, total: 6, capacity: 72, colorClass: styles.barGreen },
+    { name: 'Putri Apriani', role: 'Forensics Analyst', active: 3, inReview: 2, total: 6, capacity: 72, colorClass: styles.barGreen },
     { name: 'Haniefah Muslimah', role: 'Forensics Analyst', active: 2, inReview: 2, total: 4, capacity: 67, colorClass: styles.barYellow },
   ];
 

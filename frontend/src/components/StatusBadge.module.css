@@ -43,12 +43,21 @@
   color: var(--color-accent-600);
 }
 
-.pending .dot {
+.pending_review .dot {
   background: var(--color-warning-400);
   box-shadow: 0 0 6px rgba(245, 158, 11, 0.4);
 }
-.pending {
+.pending_review {
   color: var(--color-warning-500);
+}
+
+.action_required .dot {
+  background: var(--color-danger-500);
+  box-shadow: 0 0 6px rgba(239, 68, 68, 0.4);
+  animation: pulse 2s infinite;
+}
+.action_required {
+  color: var(--color-danger-500);
 }
 
 .rejected .dot {
