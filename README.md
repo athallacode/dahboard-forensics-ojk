@@ -36,7 +36,57 @@ Proyek ini dibangun menggunakan stack modern:
 
 Pastikan Anda telah menginstal **Node.js** (rekomendasi versi LTS terbaru) di komputer Anda sebelum memulai.
 
-### 1. Kloning Repositori (Jika belum)
+### 1. Kloning Repositori & Masuk ke Folder Project
 ```bash
 git clone https://github.com/athallacode/dahboard-forensics-ojk.git
-cd dahboard-forensics-ojk
+cd dahboard-forensics-ojk/vanilla-css/frontend
+```
+
+### 2. Instalasi Dependensi
+Instal semua package/library yang dibutuhkan:
+```bash
+npm install
+```
+
+### 3. Jalankan Mode Development (Lokal)
+Jalankan server pengembangan lokal:
+```bash
+npm run dev
+```
+Setelah berhasil berjalan, buka browser Anda dan akses:
+- **Local**: `http://localhost:3000`
+
+---
+
+## 📦 Build untuk Production
+
+Untuk melakukan build aplikasi ke mode produksi agar performa lebih optimal:
+
+1. **Build Aplikasi:**
+   ```bash
+   npm run build
+   ```
+2. **Jalankan Aplikasi Mode Production:**
+   ```bash
+   npm run start
+   ```
+
+---
+
+## 📂 Struktur Direktori Utama
+
+```text
+frontend/
+├── public/                 # Aset statis (logo, gambar, dll.)
+├── src/
+│   ├── app/                # Next.js App Router Pages
+│   │   ├── login/          # Halaman Login
+│   │   ├── dashboard/      # Semua sub-halaman dashboard (analis, case, dll.)
+│   │   └── access-denied/  # Halaman proteksi akses
+│   ├── components/         # Komponen UI Reusable (Sidebar, Topbar, dll.)
+│   ├── context/            # AuthContext & State Management Global
+│   ├── data/               # Mock data untuk visualisasi & simulasi data
+│   └── types/              # Deklarasi tipe TypeScript global
+├── package.json            # Daftar dependensi & script proyek
+└── tsconfig.json           # Konfigurasi TypeScript
+```
