@@ -112,7 +112,7 @@ export default function ReportPage() {
                   <span className={styles.divider}>•</span>
                   <span>Disubmit: {report.dateSubmitted}</span>
                   
-                  {(role === 'supervisor' || role === 'staf_pemeriksa') && (
+                  {role === 'supervisor' && (
                     <>
                       <span className={styles.divider}>•</span>
                       <span>Analis: <strong>{report.analyst}</strong></span>

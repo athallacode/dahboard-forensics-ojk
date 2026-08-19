@@ -2,7 +2,14 @@
    Announcements Page Styles
    ============================================ */
 
-.page { display: flex; flex-direction: column; gap: var(--space-6); }
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  width: 100%;
+  margin: 0;
+  animation: fadeIn 0.4s ease-out;
+}
 .header { display: flex; align-items: flex-start; justify-content: space-between; animation: fadeInUp 0.4s ease-out; }
 .title { font-family: var(--font-heading); font-size: var(--text-2xl); font-weight: 800; color: var(--color-neutral-900); }
 .subtitle { font-size: var(--text-sm); color: var(--color-neutral-500); margin-top: var(--space-1); }

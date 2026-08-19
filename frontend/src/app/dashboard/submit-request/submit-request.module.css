@@ -1,22 +1,23 @@
 .page {
-  padding: 24px 32px;
-  max-width: 1000px;
-  margin: 0 auto;
-  font-family: var(--font-sans);
-  background-color: var(--color-neutral-0);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  width: 100%;
+  margin: 0;
+  animation: fadeIn 0.4s ease-out;
 }
 
 .header {
-  margin-bottom: 24px;
-  border-bottom: 1px solid var(--color-neutral-300);
-  padding-bottom: 12px;
+  margin-bottom: 32px;
+  text-align: left;
 }
 
 .title {
-  font-size: 28px;
-  font-weight: 700;
+  font-size: 32px;
+  font-weight: 800;
   color: var(--color-neutral-800);
   margin-bottom: 8px;
+  letter-spacing: -0.02em;
 }
 
 .subtitle {
@@ -27,24 +28,47 @@
 .formContainer {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 24px;
+  animation: fadeInUp 0.5s ease-out forwards;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .card {
-  border: 1px solid var(--color-neutral-300);
+  border: none;
+  border-radius: 16px;
   background-color: var(--color-neutral-0);
-  padding: 24px;
+  padding: 32px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.card:hover {
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
 }
 
 .cardHeader {
-  margin-bottom: 20px;
+  margin-bottom: 24px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--color-neutral-100);
 }
 
 .cardTitle {
   font-size: 18px;
   font-weight: 700;
-  color: #9c27b0; /* Maroon color */
-  color: #a02020; /* Better maroon */
+  color: #a02020;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .grid {
@@ -61,27 +85,32 @@
 
 .label {
   font-size: 14px;
-  color: var(--color-neutral-600);
+  font-weight: 600;
+  color: var(--color-neutral-700);
 }
 
 .input, .select, .textarea {
   width: 100%;
-  padding: 10px 12px;
-  border: 1px solid var(--color-neutral-300);
+  padding: 12px 16px;
+  border: 1px solid var(--color-neutral-200);
+  border-radius: 8px;
   font-size: 14px;
   color: var(--color-neutral-800);
-  background-color: var(--color-neutral-0);
+  background-color: var(--color-neutral-50);
   outline: none;
   font-family: inherit;
+  transition: all 0.2s ease;
 }
 
 .input:focus, .select:focus, .textarea:focus {
-  border-color: var(--color-neutral-500);
+  background-color: var(--color-neutral-0);
+  border-color: #a02020;
+  box-shadow: 0 0 0 4px rgba(160, 32, 32, 0.1);
 }
 
 .textarea {
   resize: vertical;
-  min-height: 80px;
+  min-height: 100px;
 }
 
 /* Radio Buttons */
@@ -89,7 +118,11 @@
   display: flex;
   align-items: center;
   gap: 24px;
-  height: 40px;
+  height: 48px;
+  padding: 0 16px;
+  background-color: var(--color-neutral-50);
+  border-radius: 8px;
+  border: 1px solid var(--color-neutral-200);
 }
 
 .radioLabel {
@@ -97,6 +130,7 @@
   align-items: center;
   gap: 8px;
   font-size: 14px;
+  font-weight: 500;
   color: var(--color-neutral-700);
   cursor: pointer;
 }
@@ -104,7 +138,9 @@
 .radioInput {
   margin: 0;
   cursor: pointer;
-  accent-color: var(--color-primary-600);
+  accent-color: #a02020;
+  width: 16px;
+  height: 16px;
 }
 
 /* Bottom Section */
@@ -118,53 +154,71 @@
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 24px;
 }
 
 .sectionCard {
-  border: 1px solid var(--color-neutral-300);
-  padding: 24px;
+  border: none;
+  border-radius: 16px;
+  padding: 32px;
   background-color: var(--color-neutral-0);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  transition: box-shadow 0.3s ease;
+}
+
+.sectionCard:hover {
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
 }
 
 .formActions {
   display: flex;
   flex-direction: column;
   gap: 16px;
-  width: 200px;
-  margin-top: 48px; /* Align with the inputs of section 3 */
+  width: 240px;
+  position: sticky;
+  top: 24px;
 }
 
 .btnPrimary {
-  background-color: #a02020;
-  color: #1a1a1a;
+  background: linear-gradient(135deg, #a02020 0%, #8a1a1a 100%);
+  color: #ffffff;
   border: none;
-  padding: 12px 24px;
+  padding: 14px 24px;
   font-size: 16px;
-  font-weight: 600;
+  font-weight: 700;
   cursor: pointer;
-  border-radius: 4px;
+  border-radius: 8px;
   text-align: center;
+  box-shadow: 0 4px 12px rgba(160, 32, 32, 0.2);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .btnPrimary:hover {
-  background-color: #8a1a1a;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(160, 32, 32, 0.3);
+}
+
+.btnPrimary:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(160, 32, 32, 0.2);
 }
 
 .btnSecondary {
   background-color: var(--color-neutral-0);
-  color: #1a1a1a;
-  border: 1px solid var(--color-neutral-400);
-  padding: 12px 24px;
+  color: var(--color-neutral-700);
+  border: 1px solid var(--color-neutral-300);
+  padding: 14px 24px;
   font-size: 16px;
   font-weight: 600;
   cursor: pointer;
-  border-radius: 4px;
+  border-radius: 8px;
   text-align: center;
+  transition: all 0.2s ease;
 }
 
 .btnSecondary:hover {
   background-color: var(--color-neutral-50);
+  border-color: var(--color-neutral-400);
 }
 
 .mt3 {
@@ -173,7 +227,7 @@
 
 /* Upload Section Styles */
 .uploadSlot {
-  margin-bottom: 24px;
+  margin-bottom: 32px;
 }
 
 .uploadSlot:last-child {
@@ -188,7 +242,7 @@
 }
 
 .uploadTitle {
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 600;
   color: var(--color-neutral-800);
   display: flex;
@@ -202,35 +256,44 @@
 
 .templateLink {
   font-size: 13px;
-  color: var(--color-primary-600);
+  font-weight: 500;
+  color: #a02020;
   text-decoration: underline;
   cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.templateLink:hover {
+  color: #8a1a1a;
 }
 
 .uploadHelper {
   font-size: 13px;
   color: var(--color-neutral-500);
-  margin-bottom: 12px;
+  margin-bottom: 16px;
 }
 
 .dropzone {
-  border: 2px dashed #cbd5e1;
-  border-radius: 8px;
-  padding: 32px 16px;
+  border: 2px dashed var(--color-neutral-300);
+  border-radius: 12px;
+  padding: 40px 24px;
   text-align: center;
   cursor: pointer;
-  transition: all 0.2s ease;
-  background-color: var(--color-neutral-50);
+  transition: all 0.3s ease;
+  background-color: #f8fafc;
 }
 
 .dropzone:hover {
   border-color: #a02020;
-  background-color: #fdf2f2;
+  background-color: #fff1f2;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(160, 32, 32, 0.05);
 }
 
 .uploadIcon {
   color: #94a3b8;
-  margin-bottom: 8px;
+  margin-bottom: 12px;
+  transition: color 0.3s ease;
 }
 
 .dropzone:hover .uploadIcon {
@@ -238,14 +301,14 @@
 }
 
 .dropzoneText {
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 600;
   color: var(--color-neutral-700);
-  margin-bottom: 4px;
+  margin-bottom: 6px;
 }
 
 .dropzoneSubtext {
-  font-size: 12px;
+  font-size: 13px;
   color: var(--color-neutral-500);
 }
 
@@ -256,28 +319,35 @@
 .fileList {
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  margin-top: 12px;
+  gap: 12px;
+  margin-top: 16px;
 }
 
 .fileItem {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 12px;
+  padding: 16px;
   border: 1px solid var(--color-neutral-200);
-  border-radius: 6px;
+  border-radius: 8px;
   background-color: var(--color-neutral-0);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.fileItem:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
 
 .fileInfo {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 16px;
 }
 
 .fileIcon {
-  color: var(--color-primary-600);
+  color: #a02020;
 }
 
 .fileDetails {
@@ -289,6 +359,7 @@
   font-size: 14px;
   font-weight: 600;
   color: var(--color-neutral-800);
+  margin-bottom: 4px;
 }
 
 .fileMeta {
@@ -301,20 +372,21 @@
 
 .hashBadge {
   background-color: var(--color-neutral-100);
-  padding: 2px 6px;
-  border-radius: 4px;
+  padding: 2px 8px;
+  border-radius: 12px;
   font-family: monospace;
+  font-weight: 500;
   color: var(--color-neutral-700);
 }
 
 .hashBadge.computing {
-  background-color: var(--color-warning-50);
-  color: var(--color-warning-700);
+  background-color: #fef3c7;
+  color: #b45309;
 }
 
 .hashBadge.done {
-  background-color: var(--color-success-50);
-  color: var(--color-success-700);
+  background-color: #dcfce7;
+  color: #15803d;
 }
 
 .removeBtn {
@@ -322,8 +394,12 @@
   border: none;
   color: var(--color-neutral-400);
   cursor: pointer;
-  padding: 4px;
-  border-radius: 4px;
+  padding: 8px;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .removeBtn:hover {
@@ -332,11 +408,10 @@
 }
 
 .btnPrimary:disabled {
-  background-color: var(--color-neutral-300);
+  background: var(--color-neutral-300);
+  color: var(--color-neutral-500);
+  box-shadow: none;
   cursor: not-allowed;
-}
-
-.btnPrimary:disabled:hover {
-  background-color: var(--color-neutral-300);
+  transform: none;
 }
 

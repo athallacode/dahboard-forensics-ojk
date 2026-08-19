@@ -68,6 +68,24 @@
   color: var(--color-danger-500);
 }
 
+.pending_admin_verification .dot {
+  background: var(--color-warning-500);
+  box-shadow: 0 0 6px rgba(245, 158, 11, 0.4);
+  animation: pulse 2s infinite;
+}
+.pending_admin_verification {
+  color: var(--color-warning-600);
+}
+
+.ready_for_pickup .dot {
+  background: #10B981;
+  box-shadow: 0 0 6px rgba(16, 185, 129, 0.4);
+  animation: pulse 2s infinite;
+}
+.ready_for_pickup {
+  color: #059669;
+}
+
 @keyframes pulse {
   0%, 100% { opacity: 1; }
   50% { opacity: 0.4; }

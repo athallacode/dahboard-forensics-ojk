@@ -70,6 +70,13 @@ const menuConfig: Record<UserRole, MenuItem[]> = {
     { icon: <Bell size={20} />, label: 'Announcements', href: '/dashboard/announcements' },
     { icon: <HelpCircle size={20} />, label: 'Help & FAQ', href: '/dashboard/help' },
   ],
+  admin: [
+    { icon: <LayoutDashboard size={20} />, label: 'Dashboard', href: '/dashboard' },
+    { icon: <PackageCheck size={20} />, label: 'Logistik Fisik', href: '/dashboard/admin-workspace' },
+    { icon: <BookOpen size={20} />, label: 'Knowledge Center', href: '/dashboard/knowledge-center' },
+    { icon: <Bell size={20} />, label: 'Announcements', href: '/dashboard/announcements' },
+    { icon: <HelpCircle size={20} />, label: 'Help & FAQ', href: '/dashboard/help' },
+  ],
 };
 
 interface SidebarProps {
@@ -93,6 +100,11 @@ export default function Sidebar({ collapsed: _collapsed, onToggle: _onToggle }: 
 
   return (
     <aside className={styles.sidebar}>
+      {/* Logo Area */}
+      <div className={styles.logoContainer}>
+        <img src="/images/ojk-logo.png" alt="OJK Logo" className={styles.logo} />
+      </div>
+
       {/* Navigation */}
       <nav className={styles.nav}>
         <ul className={styles.menuList}>

@@ -14,6 +14,8 @@ const statusLabels: Record<RequestStatus, string> = {
   action_required: 'Action Required',
   pending_review: 'Pending Review',
   rejected: 'Rejected',
+  pending_admin_verification: 'Pending Admin',
+  ready_for_pickup: 'Ready for Pickup',
 };
 
 export default function StatusBadge({ status, size = 'md' }: StatusBadgeProps) {

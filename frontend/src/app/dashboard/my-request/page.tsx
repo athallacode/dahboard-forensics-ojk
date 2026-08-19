@@ -56,13 +56,13 @@ export default function MyRequestPage() {
           />
         </div>
         <div className={styles.statusFilters}>
-          {(['all', 'on_progress', 'completed', 'action_required', 'pending_review', 'rejected'] as const).map((status) => (
+          {(['all', 'on_progress', 'completed', 'action_required', 'pending_admin_verification', 'pending_review', 'ready_for_pickup', 'rejected'] as const).map((status) => (
             <button
               key={status}
               className={`${styles.filterChip} ${statusFilter === status ? styles.activeChip : ''}`}
               onClick={() => setStatusFilter(status)}
             >
-              {status === 'all' ? 'Semua' : status === 'on_progress' ? 'On Progress' : status === 'completed' ? 'Completed' : status === 'action_required' ? 'Action Required' : status === 'pending_review' ? 'Pending Review' : 'Rejected'}
+              {status === 'all' ? 'Semua' : status === 'on_progress' ? 'On Progress' : status === 'completed' ? 'Completed' : status === 'action_required' ? 'Action Required' : status === 'pending_admin_verification' ? 'Pending Admin' : status === 'pending_review' ? 'Pending Review' : status === 'ready_for_pickup' ? 'Ready for Pickup' : 'Rejected'}
               {status !== 'all' && (
                 <span className={styles.chipCount}>
                   {requests.filter((r) => r.status === status).length}
@@ -88,7 +88,6 @@ export default function MyRequestPage() {
                 <p className={styles.cardDesc}>{request.description}</p>
                 <div className={styles.cardMeta}>
                   <span>📅 {request.requestDate}</span>
-                  <span>👤 {request.assignedTo}</span>
                   <span className={styles.priorityTag} data-priority={request.priority}>
                     {request.priority}
                   </span>
@@ -131,10 +130,6 @@ export default function MyRequestPage() {
                   <span className={styles.summaryLabel}>Use Case</span>
                   <span className={styles.summaryValue}>{selectedRequest.useCase}</span>
                 </div>
-                <div className={styles.summaryItem}>
-                  <span className={styles.summaryLabel}>Assigned To</span>
-                  <span className={styles.summaryValue}>{selectedRequest.assignedTo}</span>
-                </div>
               </div>
 
               <h3 className={styles.timelineTitle}>Progress Tracking</h3>
@@ -151,42 +146,42 @@ export default function MyRequestPage() {
                       <h4>Request Disubmit</h4>
                       <span className={styles.timelineDate}>10 Mei 2026, 09:15</span>
                     </div>
-                    <p>Permohonan baru berhasil dikirim dan menunggu verifikasi supervisor.</p>
+                    <p>Permohonan baru berhasil dikirim dan menunggu penyerahan fisik ke Admin.</p>
                   </div>
                 </div>
 
-                {/* Step 2 — serah terima fisik: dari sinilah pemohon tahu barangnya sudah di tangan Lab */}
-                <div className={`${styles.timelineItem} ${styles.completed}`}>
+                {/* Step 2 — Verifikasi Admin */}
+                <div className={`${styles.timelineItem} ${selectedRequest.status !== 'pending_admin_verification' ? styles.completed : styles.current}`}>
                   <div className={styles.timelineMarker}>
                     <div className={styles.markerCircle}></div>
                     <div className={styles.markerLine}></div>
                   </div>
                   <div className={styles.timelineContent}>
                     <div className={styles.timelineHeader}>
-                      <h4>Barang Bukti Fisik Diterima Lab</h4>
-                      <span className={styles.timelineDate}>11 Mei 2026, 10:20</span>
+                      <h4>Verifikasi Fisik oleh Admin</h4>
+                      <span className={styles.timelineDate}>{selectedRequest.status !== 'pending_admin_verification' ? '11 Mei 2026, 10:20' : 'Menunggu'}</span>
                     </div>
-                    <p>Serah terima tercatat: nomor seri cocok, segel SEAL-2026-0142, kondisi Baik (Tersegel).</p>
+                    <p>Barang bukti fisik diterima, diverifikasi, dan dicatat oleh Admin Logistik Lab.</p>
                   </div>
                 </div>
 
                 {/* Step 3 */}
-                <div className={`${styles.timelineItem} ${styles.completed}`}>
+                <div className={`${styles.timelineItem} ${['pending_review', 'on_progress', 'ready_for_pickup', 'completed'].includes(selectedRequest.status) ? styles.completed : selectedRequest.status === 'pending_admin_verification' ? '' : styles.current}`}>
                   <div className={styles.timelineMarker}>
                     <div className={styles.markerCircle}></div>
                     <div className={styles.markerLine}></div>
                   </div>
                   <div className={styles.timelineContent}>
                     <div className={styles.timelineHeader}>
-                      <h4>Verifikasi Permohonan</h4>
-                      <span className={styles.timelineDate}>12 Mei 2026, 14:30</span>
+                      <h4>Verifikasi Kepala Lab</h4>
+                      <span className={styles.timelineDate}>{['pending_review', 'on_progress', 'ready_for_pickup', 'completed'].includes(selectedRequest.status) ? '12 Mei 2026, 14:30' : 'Menunggu'}</span>
                     </div>
-                    <p>Permohonan disetujui Kepala Lab (Siti Nurhaliza) dan ditugaskan ke SFD oleh Manajer Teknis.</p>
+                    <p>Permohonan disetujui Kepala Lab dan ditugaskan ke SFD oleh Manajer Teknis.</p>
                   </div>
                 </div>
 
                 {/* Step 4 */}
-                <div className={`${styles.timelineItem} ${selectedRequest.status === 'on_progress' || selectedRequest.status === 'completed' ? styles.completed : styles.current}`}>
+                <div className={`${styles.timelineItem} ${['on_progress', 'ready_for_pickup', 'completed'].includes(selectedRequest.status) ? styles.completed : ''}`}>
                   <div className={styles.timelineMarker}>
                     <div className={styles.markerCircle}></div>
                     <div className={styles.markerLine}></div>
@@ -194,23 +189,38 @@ export default function MyRequestPage() {
                   <div className={styles.timelineContent}>
                     <div className={styles.timelineHeader}>
                       <h4>Akuisisi &amp; Analisis Berjalan</h4>
-                      <span className={styles.timelineDate}>{selectedRequest.status === 'on_progress' || selectedRequest.status === 'completed' ? '15 Mei 2026, 10:00' : 'Menunggu'}</span>
+                      <span className={styles.timelineDate}>{['on_progress', 'ready_for_pickup', 'completed'].includes(selectedRequest.status) ? '15 Mei 2026, 10:00' : 'Menunggu'}</span>
                     </div>
-                    <p>Barang bukti diakuisisi (imaging + hash SHA-256) dan sedang dianalisis oleh SFD ({selectedRequest.assignedTo}).</p>
+                    <p>Barang bukti diakuisisi (imaging + hash SHA-256) dan sedang dianalisis oleh SFD.</p>
                   </div>
                 </div>
 
                 {/* Step 5 */}
+                <div className={`${styles.timelineItem} ${['ready_for_pickup', 'completed'].includes(selectedRequest.status) ? styles.completed : ''}`}>
+                  <div className={styles.timelineMarker}>
+                    <div className={styles.markerCircle}></div>
+                    <div className={styles.markerLine}></div>
+                  </div>
+                  <div className={styles.timelineContent}>
+                    <div className={styles.timelineHeader}>
+                      <h4>Selesai (Barang Siap Diambil)</h4>
+                      <span className={styles.timelineDate}>{['ready_for_pickup', 'completed'].includes(selectedRequest.status) ? '20 Mei 2026, 16:45' : 'Menunggu'}</span>
+                    </div>
+                    <p>Laporan hasil pemeriksaan telah selesai. Silakan ambil barang bukti fisik di Admin.</p>
+                  </div>
+                </div>
+
+                {/* Step 6 */}
                 <div className={`${styles.timelineItem} ${selectedRequest.status === 'completed' ? styles.completed : ''}`}>
                   <div className={styles.timelineMarker}>
                     <div className={styles.markerCircle}></div>
                   </div>
                   <div className={styles.timelineContent}>
                     <div className={styles.timelineHeader}>
-                      <h4>Selesai (Completed)</h4>
-                      <span className={styles.timelineDate}>{selectedRequest.status === 'completed' ? '20 Mei 2026, 16:45' : 'Menunggu'}</span>
+                      <h4>Barang Dikembalikan (Completed)</h4>
+                      <span className={styles.timelineDate}>{selectedRequest.status === 'completed' ? '21 Mei 2026, 09:00' : 'Menunggu'}</span>
                     </div>
-                    <p>Laporan hasil pemeriksaan telah selesai dan dapat diunduh di menu Report.</p>
+                    <p>Barang bukti fisik telah dikembalikan dengan aman oleh Admin kepada Pemohon.</p>
                   </div>
                 </div>
 

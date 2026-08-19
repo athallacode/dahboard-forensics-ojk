@@ -50,6 +50,7 @@ export default function Topbar() {
       case 'supervisor': return 'Kepala Lab';
       case 'manajer_teknis': return 'Manajer Teknis';
       case 'analis_lab': return 'SFD';
+      case 'admin': return 'Admin Lab';
       default: return role;
     }
   };
@@ -92,6 +93,7 @@ export default function Topbar() {
             <option value="supervisor">Kepala Lab (Supervisor)</option>
             <option value="manajer_teknis">Manajer Teknis</option>
             <option value="analis_lab">SFD (Spesialis Forensik Digital)</option>
+            <option value="admin">Admin Resepsionis Lab</option>
           </select>
         </div>
 

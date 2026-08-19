@@ -11,6 +11,11 @@ import {
   Timer,
   Microscope,
   ArrowRight,
+  Search,
+  Activity,
+  AlertCircle,
+  PieChart,
+  History
 } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
 import StatCard from '@/components/StatCard';
@@ -214,6 +219,165 @@ function AnalisLabDashboard() {
   );
 }
 
+// ---- Admin Lab Dashboard ----
+function AdminDashboard() {
+  const router = useRouter();
+
+  const pendingVerification = mockRequests.filter(r => r.status === 'pending_admin_verification').length;
+  const readyForPickup = mockRequests.filter(r => r.status === 'ready_for_pickup').length;
+  const completed = mockRequests.filter(r => r.status === 'completed').length;
+  const allPhysical = mockRequests.filter(r => r.status !== 'action_required').length;
+
+  return (
+    <>
+      {/* Stats Grid */}
+      <div className={styles.statsGrid}>
+        <StatCard
+          value={allPhysical}
+          label="Total Register Fisik"
+          icon={<ClipboardList size={22} />}
+          color="blue"
+          delay={100}
+        />
+        <StatCard
+          value={pendingVerification}
+          label="Menunggu Fisik"
+          icon={<AlertTriangle size={22} />}
+          color="orange"
+          delay={200}
+        />
+        <StatCard
+          value={readyForPickup}
+          label="Siap Dikembalikan"
+          icon={<CheckCircle2 size={22} />}
+          color="green"
+          delay={300}
+        />
+        <StatCard
+          value={completed}
+          label="Telah Selesai"
+          icon={<ClipboardList size={22} />}
+          color="blue"
+          delay={400}
+        />
+      </div>
+
+      <div className={styles.adminGrid}>
+        {/* Left Column */}
+        <div className={styles.adminLeft}>
+          
+          {/* Quick Search */}
+          <div className={styles.adminCard}>
+            <h3 className={styles.adminCardTitle}>
+              <Search size={18} />
+              Pencarian Cepat Resi
+            </h3>
+            <div className={styles.quickSearch}>
+              <input type="text" placeholder="Masukkan Nomor Request (Contoh: REQ-2026...)" className={styles.searchInputAdmin} />
+              <button className={styles.searchBtn}>Cari</button>
+            </div>
+          </div>
+
+          {/* SLA Alerts */}
+          <div className={styles.adminCard}>
+            <h3 className={styles.adminCardTitle} style={{ color: 'var(--color-danger-600)' }}>
+              <AlertCircle size={18} />
+              Peringatan Pengambilan (Lewat Batas)
+            </h3>
+            <div className={styles.alertList}>
+              <div className={styles.alertItem}>
+                <div className={styles.alertIcon}><AlertTriangle size={16} /></div>
+                <div className={styles.alertText}>
+                  <strong>REQ-202604-0992</strong>
+                  <span>Belum diambil sejak 5 hari lalu (Divisi Kepatuhan)</span>
+                </div>
+                <button className={styles.alertAction}>Follow Up</button>
+              </div>
+              <div className={styles.alertItem}>
+                <div className={styles.alertIcon}><AlertTriangle size={16} /></div>
+                <div className={styles.alertText}>
+                  <strong>REQ-202604-0988</strong>
+                  <span>Belum diambil sejak 7 hari lalu (Divisi Hukum)</span>
+                </div>
+                <button className={styles.alertAction}>Follow Up</button>
+              </div>
+            </div>
+          </div>
+
+          {/* Overview Table */}
+          <div className={styles.tableSection} style={{ marginTop: '0' }}>
+            <RequestTable
+              requests={mockRequests.filter(r => ['pending_admin_verification', 'ready_for_pickup'].includes(r.status))}
+              title="Tugas Logistik Fisik Saat Ini"
+              onViewAll={() => router.push('/dashboard/admin-workspace')}
+              onDetails={(req) => router.push('/dashboard/admin-workspace')}
+              maxRows={5}
+            />
+          </div>
+          
+        </div>
+
+        {/* Right Column */}
+        <div className={styles.adminRight}>
+          
+          {/* Chart Placeholder */}
+          <div className={styles.adminCard}>
+            <h3 className={styles.adminCardTitle}>
+              <PieChart size={18} />
+              Volume Logistik Bulan Ini
+            </h3>
+            <div className={styles.chartPlaceholder}>
+              <div className={styles.chartCircle}>
+                <div className={styles.chartInner}>
+                  <span>145</span>
+                  <small>Total Fisik</small>
+                </div>
+              </div>
+              <div className={styles.chartLegend}>
+                <div className={styles.legendItem}>
+                  <span className={styles.dot} style={{ background: '#3b82f6' }}></span>
+                  Masuk (80)
+                </div>
+                <div className={styles.legendItem}>
+                  <span className={styles.dot} style={{ background: '#10b981' }}></span>
+                  Keluar (65)
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Activity Log */}
+          <div className={styles.adminCard}>
+            <h3 className={styles.adminCardTitle}>
+              <History size={18} />
+              Log Aktivitas Terakhir
+            </h3>
+            <div className={styles.activityList}>
+              <div className={styles.activityItem}>
+                <span className={styles.activityTime}>10:15</span>
+                <p>Barang bukti <strong>REQ-202605-1029</strong> diterima dari Divisi Kepatuhan</p>
+              </div>
+              <div className={styles.activityItem}>
+                <span className={styles.activityTime}>09:30</span>
+                <p>Barang bukti <strong>REQ-202605-1011</strong> diserahkan ke Divisi Hukum</p>
+              </div>
+              <div className={styles.activityItem}>
+                <span className={styles.activityTime}>Kemarin, 16:45</span>
+                <p>Barang bukti <strong>REQ-202605-1008</strong> diserahkan ke Divisi Penindakan</p>
+              </div>
+              <div className={styles.activityItem}>
+                <span className={styles.activityTime}>Kemarin, 14:20</span>
+                <p>Barang bukti <strong>REQ-202605-1025</strong> diterima dari Pengawasan Bank</p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </>
+  );
+}
+
 /* ============================================
    MAIN DASHBOARD PAGE
    ============================================ */
@@ -231,6 +395,8 @@ export default function DashboardPage() {
         return 'Tugaskan kasus dan review kelayakan teknis laporan SFD';
       case 'analis_lab':
         return 'Kelola kasus yang ditugaskan dan lanjutkan analisis';
+      case 'admin':
+        return 'Kelola penerimaan dan pengembalian logistik fisik laboratorium';
       default:
         return 'Selamat datang kembali!';
     }
@@ -271,6 +437,7 @@ export default function DashboardPage() {
       {/* Manajer Teknis memakai tampilan tim yang sama dengan Kepala Lab */}
       {(user?.role === 'supervisor' || user?.role === 'manajer_teknis') && <SupervisorDashboard />}
       {user?.role === 'analis_lab' && <AnalisLabDashboard />}
+      {user?.role === 'admin' && <AdminDashboard />}
     </div>
   );
 }

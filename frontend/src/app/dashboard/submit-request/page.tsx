@@ -137,7 +137,7 @@ export default function SubmitRequestPage() {
         <CheckCircle2 size={64} color="#16a34a" style={{ margin: '0 auto 24px' }} />
         <h1 className={styles.title}>Request Submitted!</h1>
         <p className={styles.subtitle} style={{ marginBottom: '24px' }}>
-          Permohonan layanan forensik Anda telah berhasil disubmit dengan nomor referensi:
+          Permohonan layanan forensik Anda telah disubmit. <b>Segera serahkan barang bukti fisik ke Admin Lab</b> beserta nomor referensi ini:
         </p>
         <div style={{ fontSize: '24px', fontWeight: 'bold', fontFamily: 'monospace', background: '#f1f5f9', padding: '12px 24px', display: 'inline-block', borderRadius: '8px', color: '#0f172a', marginBottom: '24px' }}>
           {generatedRequestNo}

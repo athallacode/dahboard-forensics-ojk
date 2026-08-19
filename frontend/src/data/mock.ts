@@ -49,6 +49,13 @@ export const mockUsers: User[] = [
     role: 'manajer_teknis',
     division: 'LPBTI Lab Forensik',
   },
+  {
+    id: 'u6',
+    name: 'Admin Resepsionis',
+    email: 'admin.lab@ojk.go.id',
+    role: 'admin',
+    division: 'LPBTI Lab Forensik',
+  },
 ];
 
 // --- Dashboard Stats ---
@@ -133,9 +140,9 @@ export const mockRequests: ExaminationRequest[] = [
     useCase: 'Pemeriksaan Keamanan Siber',
     description: 'Evaluasi keamanan siber infrastruktur teknologi informasi lembaga keuangan.',
     requestDate: '10 Juni 2026',
-    status: 'action_required',
+    status: 'pending_admin_verification',
     priority: 'medium',
-    assignedTo: 'Haniefah Muslimah',
+    assignedTo: '-',
     createdBy: 'u1',
     division: 'Direktorat Pengawasan',
     updatedAt: '10 Juni 2026',
@@ -185,7 +192,7 @@ export const mockRequests: ExaminationRequest[] = [
     useCase: 'Analisis Log Server Transaksi',
     description: 'Pemeriksaan log server untuk mengidentifikasi pola transaksi ilegal.',
     requestDate: '15 Juni 2026',
-    status: 'completed',
+    status: 'ready_for_pickup',
     priority: 'high',
     assignedTo: 'Putri Apriani',
     createdBy: 'u1',
